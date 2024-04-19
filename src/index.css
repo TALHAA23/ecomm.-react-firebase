@@ -1,0 +1,45 @@
+@import url('https://fonts.googleapis.com/css2?family=Orelega+One&family=Outfit:wght@100..900&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    font-family: "outfit";
+}
+
+.font-orelega-one {
+    font-family: "Orelega One";
+}
+
+.bg-darker {
+    background-color: #B2B377;
+}
+
+.bg-dark {
+    background-color: #D2D180;
+}
+
+.bg-light {
+    background-color: #E5E483;
+}
+
+.bg-lighter {
+    background-color: #F1F5A8;
+}
+
+.text-cl-darker {
+    font: #B2B377;
+}
+
+.text-cl-dark {
+    font: #D2D180;
+}
+
+.text-cl-light {
+    font: #E5E483;
+}
+
+.text-cl-lighter {
+    font: #F1F5A8;
+}
