@@ -1,6 +1,11 @@
 import { useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Welcome from "./pages/Welcome";
+import Services from "./pages/Services";
+import OurNutrition from "./pages/OurNutrition";
+import OurChicks from "./pages/OurChicks";
+import OurChickens from "./pages/OurChickens";
+import Contact from "./pages/Contact";
 
 export default function Router() {
   return useRoutes([
@@ -18,23 +23,23 @@ export default function Router() {
         },
         {
           path: "services",
-          element: <h1>Hello</h1>,
+          element: <Services />,
         },
         {
           path: "nos nutritions",
-          element: <h1>Hello</h1>,
+          element: <OurNutrition />,
         },
         {
           path: "nos Poussins",
-          element: <h1>Hello</h1>,
+          element: <OurChicks />,
         },
         {
           path: "nos poulets",
-          element: <h1>Hello</h1>,
+          element: <OurChickens />,
         },
         {
           path: "contact",
-          element: <h1>Hello</h1>,
+          element: <Contact />,
         },
       ],
     },
