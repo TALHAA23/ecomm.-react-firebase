@@ -1,5 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
+import Welcome from "./pages/Welcome";
 
 export default function Router() {
   return useRoutes([
@@ -13,7 +14,7 @@ export default function Router() {
         },
         {
           path: "accuiel",
-          element: <h1>Hello</h1>,
+          element: <Welcome />,
         },
         {
           path: "services",

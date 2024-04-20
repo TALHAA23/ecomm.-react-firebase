@@ -13,33 +13,37 @@ body {
 }
 
 .bg-darker {
-    background-color: #B2B377;
+    background-color: rgba(178, 179, 119, 1);
 }
 
 .bg-dark {
-    background-color: #D2D180;
+    background-color: rgba(210, 209, 128, 0.2);
 }
 
 .bg-light {
-    background-color: #E5E483;
+    background-color: rgba(229, 228, 131, 0.2);
 }
 
 .bg-lighter {
-    background-color: #F1F5A8;
+    background-color: rgba(241, 245, 168, 0.2);
 }
 
 .text-cl-darker {
-    font: #B2B377;
+    color: rgba(178, 179, 119, 1);
 }
 
 .text-cl-dark {
-    font: #D2D180;
+    color: rgba(210, 209, 128, 0.2);
 }
 
 .text-cl-light {
-    font: #E5E483;
+    color: rgba(229, 228, 131, 0.2);
 }
 
 .text-cl-lighter {
-    font: #F1F5A8;
+    color: rgba(241, 245, 168, 0.2);
+}
+
+.text-cl-gray {
+    color: #545454
 }

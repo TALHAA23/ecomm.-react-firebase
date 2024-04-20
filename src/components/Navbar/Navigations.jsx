@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import Logo from "./Logo";
 
 const navigations = [
@@ -15,7 +15,14 @@ export default function Navigations() {
     <ul className="flex items-center justify-between h-full">
       {navigations.map((item, index) => (
         <li key={index} className=" capitalize">
-          <Link to={typeof item == "string" ? item : "."}>{item}</Link>
+          <NavLink
+            to={typeof item == "string" ? item : "."}
+            className={({ isActive }) =>
+              isActive ? " font-bold" : "font-normal"
+            }
+          >
+            {item}
+          </NavLink>
         </li>
       ))}
     </ul>
