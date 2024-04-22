@@ -33,8 +33,8 @@ export default function Contact() {
 const ContactForm = () => (
   <div className="bg-lighter rounded-lg p-7 m-10">
     <div className="w-1/2">
-      <h1 className="text-cl-darker font-orelega-one text-4xl my-4">
-        Prenons contact
+      <h1 className="text-cl-darker font-orelega-one text-4xl my-4 capitalize">
+        entrer en contact
       </h1>
       <div className=" flex items-center">
         <img

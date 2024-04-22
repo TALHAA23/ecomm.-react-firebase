@@ -6,6 +6,8 @@ import OurNutrition from "./pages/OurNutrition";
 import OurChicks from "./pages/OurChicks";
 import OurChickens from "./pages/OurChickens";
 import Contact from "./pages/Contact";
+import Auth from "./pages/Auth";
+import signOutUser from "./utils/authentication/signout";
 
 export default function Router() {
   return useRoutes([
@@ -40,6 +42,22 @@ export default function Router() {
         {
           path: "contact",
           element: <Contact />,
+        },
+        {
+          path: "auth/signin",
+          element: <Auth />,
+        },
+        {
+          path: "auth/signup",
+          element: <Auth />,
+        },
+        {
+          path: "profile",
+          element: (
+            <button onClick={signOutUser} className=" mt-40">
+              Signout
+            </button>
+          ),
         },
       ],
     },
