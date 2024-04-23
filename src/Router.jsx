@@ -1,14 +1,16 @@
 import { useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
-import Welcome from "./pages/Welcome";
-import Services from "./pages/Services";
-import OurNutrition from "./pages/OurNutrition";
-import OurChicks from "./pages/OurChicks";
-import OurChickens from "./pages/OurChickens";
-import Contact from "./pages/Contact";
 import Auth from "./pages/Auth";
 import signOutUser from "./utils/authentication/signout";
+import { lazy } from "react";
+import MySuspense from "./components/MySuspense";
 
+const Welcome = lazy(() => import("./pages/Welcome"));
+const Services = lazy(() => import("./pages/Services"));
+const OurNutrition = lazy(() => import("./pages/OurNutrition"));
+const OurChicks = lazy(() => import("./pages/OurChicks"));
+const OurChickens = lazy(() => import("./pages/OurChickens"));
+const Contact = lazy(() => import("./pages/Contact"));
 export default function Router() {
   return useRoutes([
     {
@@ -21,27 +23,27 @@ export default function Router() {
         },
         {
           path: "accuiel",
-          element: <Welcome />,
+          element: <MySuspense children={<Welcome />} />,
         },
         {
           path: "services",
-          element: <Services />,
+          element: <MySuspense children={<Services />} />,
         },
         {
-          path: "nos nutritions",
-          element: <OurNutrition />,
+          path: "nosnutritions",
+          element: <MySuspense children={<OurNutrition />} />,
         },
         {
-          path: "nos Poussins",
-          element: <OurChicks />,
+          path: "nosPoussins",
+          element: <MySuspense children={<OurChicks />} />,
         },
         {
-          path: "nos poulets",
-          element: <OurChickens />,
+          path: "nospoulets",
+          element: <MySuspense children={<OurChickens />} />,
         },
         {
           path: "contact",
-          element: <Contact />,
+          element: <MySuspense children={<Contact />} />,
         },
         {
           path: "auth/signin",

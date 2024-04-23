@@ -65,6 +65,11 @@ export default function AuthForm() {
                 name={inputPlacesholder}
                 placeholder={inputPlacesholder}
                 className=" w-[90%] h-14 bg-dark rounded-md pl-3"
+                required={
+                  item == "signup" && inputPlacesholder == "username"
+                    ? true
+                    : false
+                }
                 hidden={
                   item == "signin" && inputPlacesholder == "username"
                     ? true

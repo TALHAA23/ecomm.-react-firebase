@@ -16,7 +16,7 @@ export default function Navigations() {
       {navigations.map((item, index) => (
         <li key={index} className=" capitalize">
           <NavLink
-            to={typeof item == "string" ? item : "."}
+            to={typeof item == "string" ? item.split(" ").join("") : "."}
             className={({ isActive }) =>
               isActive ? " font-bold" : "font-normal"
             }
