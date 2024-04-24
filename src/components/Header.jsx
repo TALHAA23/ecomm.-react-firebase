@@ -8,7 +8,7 @@ const headerMenu = [
 export default function Header() {
   const user = useUser();
   return (
-    <div className=" w-full h-full bg-lighter flex gap-1 justify-end items-center">
+    <div className=" w-full h-full bg-lighter flex gap-1 justify-end items-center px-2">
       {!user ? (
         <Link
           to="/auth/signin"

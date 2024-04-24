@@ -4,6 +4,8 @@ import Auth from "./pages/Auth";
 import signOutUser from "./utils/authentication/signout";
 import { lazy } from "react";
 import MySuspense from "./components/MySuspense";
+import ProductDetails from "./pages/ProductDetails";
+import Cart from "./pages/Cart";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -11,6 +13,7 @@ const OurNutrition = lazy(() => import("./pages/OurNutrition"));
 const OurChicks = lazy(() => import("./pages/OurChicks"));
 const OurChickens = lazy(() => import("./pages/OurChickens"));
 const Contact = lazy(() => import("./pages/Contact"));
+const Shop = lazy(() => import("./pages/Shop"));
 export default function Router() {
   return useRoutes([
     {
@@ -44,6 +47,18 @@ export default function Router() {
         {
           path: "contact",
           element: <MySuspense children={<Contact />} />,
+        },
+        {
+          path: "shop",
+          element: <MySuspense children={<Shop />} />,
+        },
+        {
+          path: "shop/:productId",
+          element: <MySuspense children={<ProductDetails />} />,
+        },
+        {
+          path: "cart",
+          element: <Cart />,
         },
         {
           path: "auth/signin",
