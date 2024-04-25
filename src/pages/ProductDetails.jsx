@@ -2,7 +2,7 @@ import ShopHeader from "../components/Shop/ShopHeader";
 
 export default function ProductDetails() {
   return (
-    <div className="h-screen max-h-[600px] border border-black">
+    <div className="h-screen max-h-[600px]">
       <ShopHeader />
       <div className="h-[calc(100%-60px)] flex">
         <ImagesArea />
