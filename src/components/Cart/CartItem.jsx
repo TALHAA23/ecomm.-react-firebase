@@ -1,7 +1,13 @@
-export default function CartItem() {
+import { useMutation } from "@tanstack/react-query";
+import removeItemFromCart from "../../utils/db/removeItemFromCart";
+import { useUser } from "../../hooks/UserProvider";
+import { useEffect, useRef } from "react";
+import { useMessageUpdater } from "../../hooks/MessageProvider";
+
+export default function CartItem({ id, title, price, desc }) {
   return (
     <div className="relative w-[95%] bg-gray-100 rounded p-2 flex h-[110px] gap-2 my-2 mx-auto">
-      <Cancel />
+      <Cancel itemId={id} />
       <Counter />
       <ImageAndSelection />
       <Details />
@@ -32,8 +38,36 @@ const Details = () => (
   </div>
 );
 
-const Cancel = () => (
-  <button className="absolute right-1 top-1 w-8 rounded-full hover:bg-gray-200">
-    <img src="/icons/cross-svgrepo-com.svg" alt="delete" className=" " />
-  </button>
-);
+const Cancel = ({ itemId }) => {
+  const ref = useRef();
+  const user = useUser();
+  const updateMessage = useMessageUpdater();
+  const { isPending, isSuccess, isError, error, mutate } = useMutation({
+    mutationKey: ["remove-item"],
+    mutationFn: () => removeItemFromCart(user.uid, itemId),
+  });
+
+  useEffect(() => {
+    if (!isSuccess && !isError) return;
+    if (isSuccess) ref.current?.parentElement.remove();
+    updateMessage(isError ? error.message : "Item removed from cart!");
+  }, [isSuccess, isError]);
+
+  if (isPending)
+    ref.current?.parentElement.classList.add(
+      "opacity-50",
+      "cursor-not-allowed"
+    );
+
+  return (
+    <button
+      ref={ref}
+      onClick={mutate}
+      className={`absolute right-1 top-1 w-8 rounded-full hover:bg-gray-200
+      ${isPending && "animate-spin"}
+      `}
+    >
+      <img src="/icons/cross-svgrepo-com.svg" alt="delete" className=" " />
+    </button>
+  );
+};
