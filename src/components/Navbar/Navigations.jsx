@@ -2,11 +2,11 @@ import { Link, NavLink } from "react-router-dom";
 import Logo from "./Logo";
 
 const navigations = [
-  "accuiel",
   "services",
   "nos nutritions",
-  <Logo />,
   "nos Poussins",
+  <Logo />,
+  "boutique",
   "nos poulets",
   "contact",
 ];

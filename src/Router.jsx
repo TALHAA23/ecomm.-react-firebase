@@ -6,6 +6,11 @@ import { lazy } from "react";
 import MySuspense from "./components/MySuspense";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
+import Profile from "./pages/Profile";
+import ProfileLayout from "./components/Profile/ProfileLayout";
+import AccountInformation from "./components/Profile/AccountInformation";
+import CartLayout from "./components/Cart/CartLayout";
+import Addresses from "./components/Cart/Addresses";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -22,7 +27,7 @@ export default function Router() {
       children: [
         {
           index: true,
-          element: <h1>Hello</h1>,
+          element: <MySuspense children={<Welcome />} />,
         },
         {
           path: "accuiel",
@@ -49,16 +54,30 @@ export default function Router() {
           element: <MySuspense children={<Contact />} />,
         },
         {
-          path: "shop",
+          path: "boutique",
           element: <MySuspense children={<Shop />} />,
         },
         {
-          path: "shop/:productId",
+          path: "boutique/:productId",
           element: <MySuspense children={<ProductDetails />} />,
         },
         {
           path: "cart",
-          element: <Cart />,
+          element: <CartLayout />,
+          children: [
+            {
+              index: true,
+              element: <Cart />,
+            },
+            {
+              path: "address",
+              element: <Addresses />,
+            },
+            {
+              path: "confirmation",
+              element: <h1>Confirmation is done here</h1>,
+            },
+          ],
         },
         {
           path: "auth/signin",
@@ -70,11 +89,17 @@ export default function Router() {
         },
         {
           path: "profile",
-          element: (
-            <button onClick={signOutUser} className=" mt-40">
-              Signout
-            </button>
-          ),
+          element: <ProfileLayout />,
+          children: [
+            {
+              element: <AccountInformation />,
+              index: true,
+            },
+            {
+              path: "history",
+              element: <h1>History goes here</h1>,
+            },
+          ],
         },
       ],
     },

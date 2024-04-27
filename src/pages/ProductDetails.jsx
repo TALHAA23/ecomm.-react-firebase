@@ -1,6 +1,23 @@
+import { useNavigate, useParams } from "react-router-dom";
 import ShopHeader from "../components/Shop/ShopHeader";
+import { useMessageUpdater } from "../hooks/MessageProvider";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
+import { useUser } from "../hooks/UserProvider";
+import postItemToCart from "../utils/db/postItemToCart";
+import getProductById from "../utils/db/getProductById";
+import Loader from "../components/Loader/Loader";
 
 export default function ProductDetails() {
+  const { productId } = useParams();
+  const { isPending, isError, error, data } = useQuery({
+    queryKey: [productId],
+    queryFn: () => getProductById(productId),
+    staleTime: 86400000,
+  });
+
+  if (isPending) return <Loader />;
+
   return (
     <div className="h-screen max-h-[600px]">
       <ShopHeader />
@@ -23,8 +40,9 @@ const ImagesArea = () => (
     <div className="  flex gap-3 items-center h-[20%] justify-center py-2">
       {Array(3)
         .fill(null)
-        .map(() => (
+        .map((item, index) => (
           <img
+            key={index}
             src="/images/chick.png"
             alt="img"
             className=" h-full aspect-square object-contain border border-gray-200 rounded"
@@ -50,30 +68,65 @@ const Details = () => (
   </div>
 );
 
-const ButtonsAndRating = () => (
-  <div>
-    <div className="flex items-center gap-2 my-2">
-      <div className="flex">
-        {Array(5)
-          .fill(null)
-          .map((item, index) => (
-            <img
-              key={index}
-              src="/icons/star-solid-svgrepo-com.svg"
-              alt=""
-              className=" w-4"
-            />
-          ))}
+const ButtonsAndRating = () => {
+  const user = useUser();
+  const navigate = useNavigate();
+  const { productId } = useParams();
+  const updateMessage = useMessageUpdater();
+
+  const addItemToCart = async (event) => {
+    const { name } = event.target.dataset;
+    if (!user) navigate("/auth/signin");
+    await postItemToCart(user.uid, productId);
+    name == "addToCart"
+      ? updateMessage("Item added to cart")
+      : navigate("/cart");
+  };
+  const { isPending, isError, error, isSuccess, mutate } = useMutation({
+    mutationKey: ["add-to-cart"],
+    mutationFn: addItemToCart,
+  });
+
+  useEffect(() => {
+    if (!isError) return;
+    updateMessage(error.message);
+  }, [isError]);
+
+  return (
+    <div>
+      <div className="flex items-center gap-2 my-2">
+        <div className="flex">
+          {Array(5)
+            .fill(null)
+            .map((item, index) => (
+              <img
+                key={index}
+                src="/icons/star-solid-svgrepo-com.svg"
+                alt=""
+                className=" w-4"
+              />
+            ))}
+        </div>
+        <p className="text-sm">12 reviews</p>
       </div>
-      <p className="text-sm">12 reviews</p>
+      <div className="w-full flex flex-col lg:flex-row gap-1">
+        <button
+          onClick={mutate}
+          disabled={isPending}
+          data-name="addToCart"
+          className="grow py-3 border-2 border-[#B2B377] rounded-lg font-bold active:scale-95 disabled:opacity-70"
+        >
+          Add to cart
+        </button>
+        <button
+          onClick={mutate}
+          disabled={isPending}
+          data-name="checkout"
+          className="grow py-3 bg-darker text-white rounded-lg font-bold hover:opacity-90 disabled:opacity-70"
+        >
+          Checkout
+        </button>
+      </div>
     </div>
-    <div className="w-full flex flex-col lg:flex-row gap-1">
-      <button className="grow py-3 border-2 border-[#B2B377] rounded-lg font-bold active:scale-95">
-        Add to cart
-      </button>
-      <button className="grow py-3 bg-darker text-white rounded-lg font-bold hover:opacity-90">
-        Checkout
-      </button>
-    </div>
-  </div>
-);
+  );
+};

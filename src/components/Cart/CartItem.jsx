@@ -4,12 +4,22 @@ import { useUser } from "../../hooks/UserProvider";
 import { useEffect, useRef } from "react";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
 
-export default function CartItem({ id, title, price, desc }) {
+export default function CartItem({
+  id,
+  title,
+  price,
+  desc,
+  ready,
+  toggleItem,
+}) {
   return (
-    <div className="relative w-[95%] bg-gray-100 rounded p-2 flex h-[110px] gap-2 my-2 mx-auto">
+    <div
+      onClick={() => toggleItem(id)}
+      className="relative w-[95%] bg-gray-100 rounded p-2 flex h-[110px] gap-2 my-2 mx-auto"
+    >
       <Cancel itemId={id} />
       <Counter />
-      <ImageAndSelection />
+      <ImageAndSelection readyToCheckout={ready} />
       <Details />
     </div>
   );
@@ -23,12 +33,15 @@ const Counter = () => (
   </div>
 );
 
-const ImageAndSelection = () => (
-  <img
-    src="/images/chick.png"
-    alt="img"
-    className="h-full aspect-square rounded"
-  />
+const ImageAndSelection = ({ readyToCheckout }) => (
+  <div className="relative h-full aspect-square rounded">
+    <img src="/images/chick.png" alt="img" className="h-full w-full" />
+    {readyToCheckout && (
+      <div className=" absolute top-0 rounded w-full h-full bg-black/50 flex items-center justify-center">
+        <img src="/icons/tick-svgrepo-com.svg" alt="tick" />
+      </div>
+    )}
+  </div>
 );
 
 const Details = () => (
@@ -62,7 +75,10 @@ const Cancel = ({ itemId }) => {
   return (
     <button
       ref={ref}
-      onClick={mutate}
+      onClick={(e) => {
+        e.stopPropagation();
+        mutate();
+      }}
       className={`absolute right-1 top-1 w-8 rounded-full hover:bg-gray-200
       ${isPending && "animate-spin"}
       `}

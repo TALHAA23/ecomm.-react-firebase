@@ -1,5 +1,5 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import createUser from "../../utils/authentication/signup";
 import loginUser from "../../utils/authentication/login";
@@ -14,6 +14,7 @@ const inputs = [
 export default function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname.split("/").pop();
+  const navigate = useNavigate();
   const { isPending, isSuccess, isError, error, data, mutate, reset } =
     useMutation({
       mutationKey: ["signup"],
@@ -34,6 +35,9 @@ export default function AuthForm() {
       currentPage == "signin"
         ? await loginUser(email, password)
         : await createUser(email, password, username);
+
+    const { redirect } = location.state;
+    if (redirect) navigate(redirect);
 
     return response;
   }

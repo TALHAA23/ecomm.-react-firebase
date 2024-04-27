@@ -1,5 +1,6 @@
 import { Suspense } from "react";
+import Loader from "./Loader/Loader";
 
 export default function MySuspense({ children }) {
-  return <Suspense fallback={<h1>Loading...</h1>}>{children}</Suspense>;
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
 }

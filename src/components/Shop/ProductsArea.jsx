@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import ProductCard from "./ProductCard";
 import { useEffect, useState } from "react";
 import getProducts from "../../utils/db/getProducts";
@@ -10,6 +10,7 @@ export default function ProductsArea() {
     queryKey: [`product-page-${page}`],
     queryFn: () => getProducts(lastDoc),
     staleTime: 80000000,
+    placeholderData: keepPreviousData,
   });
   useEffect(() => {
     if (data) setLastDoc(data.lastDocRef);
@@ -36,11 +37,11 @@ export default function ProductsArea() {
           Prev
         </button>
         <button
-          disabled={!data || data.products.length < 9}
+          disabled={!data || data.products.length < 9 || isFetching}
           onClick={() => setPage((prevPage) => prevPage + 1)}
           className="w-1/2 max-w-[300px] py-2 text-lg font-bold bg-darker rounded-md text-white disabled:opacity-80 disabled:cursor-not-allowed"
         >
-          Next
+          {isFetching ? "Fetching..." : "Next"}
         </button>
       </div>
     </div>

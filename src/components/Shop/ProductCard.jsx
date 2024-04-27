@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/UserProvider";
 import { useMutation } from "@tanstack/react-query";
 import postItemToCart from "../../utils/db/postItemToCart";
@@ -50,7 +50,7 @@ const AddToCart = ({ addItemToCartFn }) => {
     <div
       onClick={mutate}
       className={`absolute top-1 left-1 w-8 p-1 aspect-square rounded-full bg-light border-2 border-transparent hover:border-lime-200 
-      ${isPending ? " animate-spin cursor-not-allowed" : " hover:scale-125"}
+      ${isPending ? "animate-spin cursor-not-allowed" : "hover:scale-125"}
      `}
     >
       <img
@@ -73,7 +73,7 @@ const Image = () => (
   />
 );
 
-const Desc = ({ addItemToCartFn }) => {
+const Desc = ({ addItemToCartFn, itemId }) => {
   const navigate = useNavigate();
   const updateMessage = useMessageUpdater();
 
@@ -94,13 +94,19 @@ const Desc = ({ addItemToCartFn }) => {
         <p className=" ml-2 text-sm">
           {text.length <= 110 ? text : text.substring(0, 110) + "..."}
         </p>
-        <button
-          onClick={mutate}
-          disabled={isPending}
+        {/* <button
+            onClick={mutate}
+            disabled={isPending}
+            className="w-full py-2 rounded font-semibold bg-darker text-white text-center hover:opacity-90 disabled:opacity-80"
+          >
+            {isPending ? "Preparing..." : "Place order"}
+          </button> */}
+        <Link
+          to={itemId}
           className="w-full py-2 rounded font-semibold bg-darker text-white text-center hover:opacity-90 disabled:opacity-80"
         >
-          {isPending ? "Preparing..." : "Place order"}
-        </button>
+          More
+        </Link>
       </div>
     </div>
   );
