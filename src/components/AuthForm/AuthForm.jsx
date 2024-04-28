@@ -36,7 +36,7 @@ export default function AuthForm() {
         ? await loginUser(email, password)
         : await createUser(email, password, username);
 
-    const { redirect } = location.state;
+    const redirect = location?.state?.redirect;
     if (redirect) navigate(redirect);
 
     return response;

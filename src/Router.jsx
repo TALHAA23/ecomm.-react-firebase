@@ -11,6 +11,9 @@ import ProfileLayout from "./components/Profile/ProfileLayout";
 import AccountInformation from "./components/Profile/AccountInformation";
 import CartLayout from "./components/Cart/CartLayout";
 import Addresses from "./components/Cart/Addresses";
+import AddressForm from "./components/Forms/AddressFrom";
+import Confirmation from "./components/Cart/Confirmation";
+import End from "./components/Cart/End";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -75,9 +78,17 @@ export default function Router() {
             },
             {
               path: "confirmation",
-              element: <h1>Confirmation is done here</h1>,
+              element: <Confirmation />,
+            },
+            {
+              path: "end",
+              element: <End />,
             },
           ],
+        },
+        {
+          path: "form/address-form",
+          element: <AddressForm />,
         },
         {
           path: "auth/signin",

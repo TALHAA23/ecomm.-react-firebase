@@ -5,7 +5,7 @@ import Footer from "./Footer/Footer";
 
 export default function Layout() {
   return (
-    <div className=" grid grid-rows-[40px_60px_auto_400px]">
+    <div className="grid grid-rows-[40px_60px_auto_400px]">
       <Header />
       <NavBar />
       <Outlet />

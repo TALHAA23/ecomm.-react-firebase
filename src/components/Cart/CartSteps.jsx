@@ -26,7 +26,9 @@ export default function CartSteps() {
               ></div>
             </div>
           </div>
-          <p className="text-sm">{step}</p>
+          <p className={`text-sm ${cartSteps[step] ? "line-through" : ""} `}>
+            {step}
+          </p>
         </div>
       ))}
     </div>
