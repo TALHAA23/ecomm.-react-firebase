@@ -6,7 +6,7 @@ export default function AddressCard({
   return (
     <div
       onClick={() => updateAddress(shippingDetails)}
-      className={`relative w-full max-w-[700px] p-3 rounded ${
+      className={`relative w-full p-3 rounded ${
         selectedAddress == shippingDetails ? "bg-green-300" : "bg-lighter"
       }`}
     >

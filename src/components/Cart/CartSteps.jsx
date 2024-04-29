@@ -5,7 +5,7 @@ export default function CartSteps() {
   const cartSteps = useCartSteps();
 
   return (
-    <div className="fixed hidden sm:block right-5 top-1/2 -translate-y-1/2 rounded bg-gray-100 py-10 px-12">
+    <div className=" sticky h-fit hidden sm:block right-5 top-1/2 -translate-y-1/2 rounded bg-gray-100 py-10 px-12">
       {steps.map((step, index) => (
         <div key={index} className="flex gap-3 items-start">
           <div className="flex flex-col items-center pt-1">

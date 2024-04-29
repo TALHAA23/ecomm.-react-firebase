@@ -8,9 +8,11 @@ import getUserField from "../../utils/db/getUserField";
 import Loader from "../Loader/Loader";
 import AddressCard from "./AddressCard";
 import updateShippingAddress from "../../utils/db/updateShippingAddress";
+import { useOrderDetailsUpdater } from "../../hooks/OrderDetailsProvider";
 
 export default function Addresses() {
   const user = useUser();
+  const captureOrderDetails = useOrderDetailsUpdater();
   const navigate = useNavigate();
   const updateCartStep = useCartStepsUpdater();
   const [selectedAddress, setSelectedAddress] = useState(null);
@@ -33,6 +35,7 @@ export default function Addresses() {
 
   const moveToNextStep = () => {
     const inUseAddress = data.filter((address) => address.inuse);
+    captureOrderDetails("shippingDetails", selectedAddress);
     if (selectedAddress !== inUseAddress)
       updateShippingAddress(user.uid, selectedAddress);
     updateCartStep("address");
@@ -42,8 +45,8 @@ export default function Addresses() {
   if (isPending) return <Loader />;
 
   return (
-    <div>
-      <div className="flex flex-col items-center gap-2 m-2">
+    <div className="mx-auto w-full max-w-[800px]">
+      <div className="flex flex-col items-center gap-2">
         {data.map((address, index) => (
           <AddressCard
             key={index}
@@ -56,14 +59,14 @@ export default function Addresses() {
       <div className="flex flex-col gap-1 m-3">
         <Link
           to="/form/address-form"
-          className="w-[95%] bg-darker py-4 text-center text-lg font-bold rounded text-white hover:opacity-85"
+          className="w-full bg-darker py-4 text-center text-lg font-bold rounded text-white hover:opacity-85"
         >
           Add new address
         </Link>
         <button
           onClick={moveToNextStep}
           disabled={!selectedAddress}
-          className="w-[95%] bg-darker py-4 text-lg font-bold rounded text-white hover:opacity-85 disabled:opacity-70"
+          className="w-full bg-darker py-4 text-lg font-bold rounded text-white hover:opacity-85 disabled:opacity-70"
         >
           Next
         </button>
