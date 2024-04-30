@@ -4,16 +4,24 @@ import Line from "../Line";
 import { useNavigate } from "react-router-dom";
 import { useCartStepsUpdater } from "../../hooks/CartStepsProvider";
 import { useOrderDetails } from "../../hooks/OrderDetailsProvider";
+import { useMutation } from "@tanstack/react-query";
+import placeOrder from "../../utils/db/placeOrder";
 
 export default function Confirmation() {
   const user = useUser();
   const orderDetails = useOrderDetails();
   const updateCartStep = useCartStepsUpdater();
   const navigate = useNavigate();
+
   const today = useRef(new Date());
+  const orderPlacementMutation = useMutation({
+    mutationKey: ["order-placement"],
+    mutationFn: () => placeOrder(user.uid, orderDetails),
+  });
 
   const finalizeOrder = () => {
     updateCartStep("confirmation");
+    orderPlacementMutation.mutate();
     navigate("/cart/end");
   };
 

@@ -6,7 +6,6 @@ import { lazy } from "react";
 import MySuspense from "./components/MySuspense";
 import ProductDetails from "./pages/ProductDetails";
 import Cart from "./pages/Cart";
-import Profile from "./pages/Profile";
 import ProfileLayout from "./components/Profile/ProfileLayout";
 import AccountInformation from "./components/Profile/AccountInformation";
 import CartLayout from "./components/Cart/CartLayout";
@@ -14,6 +13,7 @@ import Addresses from "./components/Cart/Addresses";
 import AddressForm from "./components/Forms/AddressFrom";
 import Confirmation from "./components/Cart/Confirmation";
 import End from "./components/Cart/End";
+import ShippingAddresses from "./components/Profile/ShippingAddresses";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -109,6 +109,10 @@ export default function Router() {
             {
               path: "history",
               element: <h1>History goes here</h1>,
+            },
+            {
+              path: "shippingaddress",
+              element: <ShippingAddresses />,
             },
           ],
         },

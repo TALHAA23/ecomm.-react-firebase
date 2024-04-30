@@ -20,4 +20,5 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const productCollection = collection(db, "products");
 export const usersCollection = collection(db, "users");
+export const ordersCollection = collection(db, "orders");
 export const auth = getAuth(app);
