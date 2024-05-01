@@ -1,12 +1,12 @@
 import { useNavigate, useParams } from "react-router-dom";
 import ShopHeader from "../components/Shop/ShopHeader";
 import { useMessageUpdater } from "../hooks/MessageProvider";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useUser } from "../hooks/UserProvider";
 import postItemToCart from "../utils/db/postItemToCart";
 import getProductById from "../utils/db/getProductById";
 import Loader from "../components/Loader/Loader";
+import Error from "../components/Error";
 
 export default function ProductDetails() {
   const { productId } = useParams();
@@ -17,13 +17,14 @@ export default function ProductDetails() {
   });
 
   if (isPending) return <Loader />;
+  else if (isError) return <Error error={error} />;
 
   return (
     <div className="h-screen max-h-[600px]">
       <ShopHeader />
       <div className="h-[calc(100%-60px)] flex">
         <ImagesArea />
-        <Details />
+        <Details {...data} />
       </div>
       <section className="flex"></section>
     </div>
@@ -52,17 +53,13 @@ const ImagesArea = () => (
   </div>
 );
 
-const Details = () => (
+const Details = ({ title, price, desc }) => (
   <div className="w-1/2 p-4 flex flex-col justify-between">
     <div>
-      <h1 className=" text-4xl font-bold">Poussin arbor</h1>
-      <h2 className=" text-3xl font-bold">$10</h2>
+      <h1 className=" text-4xl font-bold">{title}</h1>
+      <h2 className=" text-3xl font-bold">${price}</h2>
       <h3 className=" text-2xl font-bold">Details</h3>
-      <p>
-        Experience the rich, bold flavor of our Caffè Americano, a perfect blend
-        of espresso and hot water that will invigorate your senses and energize
-        your day!
-      </p>
+      <p>{desc}</p>
     </div>
     <ButtonsAndRating />
   </div>
@@ -70,6 +67,7 @@ const Details = () => (
 
 const ButtonsAndRating = () => {
   const user = useUser();
+  const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { productId } = useParams();
   const updateMessage = useMessageUpdater();
@@ -85,12 +83,14 @@ const ButtonsAndRating = () => {
   const { isPending, isError, error, isSuccess, mutate } = useMutation({
     mutationKey: ["add-to-cart"],
     mutationFn: addItemToCart,
-  });
+    onError: (error) => {
+      updateMessage(error.message);
+    },
 
-  useEffect(() => {
-    if (!isError) return;
-    updateMessage(error.message);
-  }, [isError]);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+    },
+  });
 
   return (
     <div>

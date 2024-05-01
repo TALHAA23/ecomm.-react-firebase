@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/UserProvider";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postItemToCart from "../../utils/db/postItemToCart";
 import { useEffect } from "react";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
-const text = `Experience the rich, bold flavor of our Caffè Americano, a perfect blend
-      of espresso and hot water.`;
+
 export default function ProductCard({ id, title, desc, price }) {
   const user = useUser();
+  const navigate = useNavigate();
 
   const addItemToCart = async () => {
     if (!user) navigate("/auth/signin");
@@ -16,26 +16,27 @@ export default function ProductCard({ id, title, desc, price }) {
 
   return (
     <div className="relative w-full aspect-[3/4] flex flex-col rounded shadow-md">
-      <PriceTag />
+      <PriceTag price={price} />
       <AddToCart
         addItemToCartFn={addItemToCart}
-        userId={user.uid}
+        userId={user?.uid}
         itemId={id}
       />
       <Image />
-      <Desc addItemToCartFn={addItemToCart} userId={user.uid} itemId={id} />
+      <Desc title={title} desc={desc} itemId={id} />
     </div>
   );
 }
 
-const PriceTag = () => (
+const PriceTag = ({ price }) => (
   <div className=" absolute right-0 top-0 px-4 py-1 bg-darker text-white font-bold rounded-tr">
-    10$
+    ${price}
   </div>
 );
 
 const AddToCart = ({ addItemToCartFn }) => {
   const updateMessage = useMessageUpdater();
+  const queryClient = useQueryClient();
   const { isPending, isError, error, isSuccess, mutate } = useMutation({
     mutationKey: ["add-to-cart"],
     mutationFn: addItemToCartFn,
@@ -44,6 +45,7 @@ const AddToCart = ({ addItemToCartFn }) => {
   useEffect(() => {
     if (!isSuccess && !isError) return;
     updateMessage(isError ? error.message : "Item added to cart!");
+    queryClient.invalidateQueries({ queryKey: ["cart-items"] });
   }, [isSuccess, isError]);
 
   return (
@@ -73,34 +75,27 @@ const Image = () => (
   />
 );
 
-const Desc = ({ addItemToCartFn, itemId }) => {
-  const navigate = useNavigate();
-  const updateMessage = useMessageUpdater();
+const Desc = ({ title, desc, itemId }) => {
+  // const navigate = useNavigate();
+  // const updateMessage = useMessageUpdater();
 
-  const { isPending, isError, error, isSuccess, mutate } = useMutation({
-    mutationKey: ["add-to-cart"],
-    mutationFn: addItemToCartFn,
-  });
+  // const { isPending, isError, error, isSuccess, mutate } = useMutation({
+  //   mutationKey: ["add-to-cart"],
+  //   mutationFn: addItemToCartFn,
+  // });
 
-  useEffect(() => {
-    if (!isSuccess && !isError) return;
-    isError ? updateMessage(error.message) : navigate("/cart");
-  }, [isSuccess, isError]);
+  // useEffect(() => {
+  //   if (!isSuccess && !isError) return;
+  //   isError ? updateMessage(error.message) : navigate("/cart");
+  // }, [isSuccess, isError]);
 
   return (
     <div className=" grow flex flex-col p-1 bg-gray-200 rounded-b">
-      <h1 className="font-semibold">Poussin arbor</h1>
+      <h1 className="font-semibold">{title}</h1>
       <div className="w-full flex flex-col justify-between h-full">
         <p className=" ml-2 text-sm">
-          {text.length <= 110 ? text : text.substring(0, 110) + "..."}
+          {desc.length <= 110 ? desc : desc.substring(0, 110) + "..."}
         </p>
-        {/* <button
-            onClick={mutate}
-            disabled={isPending}
-            className="w-full py-2 rounded font-semibold bg-darker text-white text-center hover:opacity-90 disabled:opacity-80"
-          >
-            {isPending ? "Preparing..." : "Place order"}
-          </button> */}
         <Link
           to={itemId}
           className="w-full py-2 rounded font-semibold bg-darker text-white text-center hover:opacity-90 disabled:opacity-80"

@@ -14,7 +14,7 @@ export default function End() {
   if (!orderPlacementMutation)
     return (
       <h1 className="mt-20">
-        Opss, we can't Confirm your order, please restart from step one
+        Oops, we can't Confirm your order, please restart from step one
         <Link to="/cart" className=" underline text-blue-900">
           here
         </Link>

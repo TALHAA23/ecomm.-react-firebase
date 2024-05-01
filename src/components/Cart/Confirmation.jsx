@@ -4,11 +4,13 @@ import Line from "../Line";
 import { useNavigate } from "react-router-dom";
 import { useCartStepsUpdater } from "../../hooks/CartStepsProvider";
 import { useOrderDetails } from "../../hooks/OrderDetailsProvider";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import placeOrder from "../../utils/db/placeOrder";
+import formatDate from "../../assets/formatDate";
 
 export default function Confirmation() {
   const user = useUser();
+  const queryClinet = useQueryClient();
   const orderDetails = useOrderDetails();
   const updateCartStep = useCartStepsUpdater();
   const navigate = useNavigate();
@@ -17,6 +19,9 @@ export default function Confirmation() {
   const orderPlacementMutation = useMutation({
     mutationKey: ["order-placement"],
     mutationFn: () => placeOrder(user.uid, orderDetails),
+    onSuccess: () => {
+      queryClinet.invalidateQueries({ queryKey: ["my-orders"] });
+    },
   });
 
   const finalizeOrder = () => {
@@ -37,7 +42,7 @@ export default function Confirmation() {
           .map((item, index) => (
             <p key={index} className="flex flex-col grow text-center">
               <span className="text-xs text-gray-600 "> Date order</span>
-              <span> {today.current.toLocaleDateString()}</span>
+              <span> {formatDate(today.current)}</span>
             </p>
           ))}
       </div>

@@ -12,7 +12,7 @@ export default async function getUserField(userId, fieldName) {
     // Extract the specified field
     const userData = userDocSnapshot.data();
     const fieldValue = userData[fieldName];
-    return fieldValue;
+    return fieldValue || null;
   } else {
     throw new Error(`User document with ID ${userId} does not exist.`);
   }

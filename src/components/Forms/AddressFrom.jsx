@@ -1,6 +1,7 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import recordNewAddress from "../../utils/db/recoredNewAddress";
 import { useUser } from "../../hooks/UserProvider";
+import { useNavigate } from "react-router-dom";
 
 const inputs = [
   "full name",
@@ -12,6 +13,8 @@ const inputs = [
 ];
 export default function AddressForm() {
   const user = useUser();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const handleSubmit = async (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
@@ -30,6 +33,10 @@ export default function AddressForm() {
   const { isPending, isSuccess, isError, error, mutate } = useMutation({
     mutationKey: ["new-address"],
     mutationFn: handleSubmit,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["shipping-details"] });
+      navigate("/cart");
+    },
   });
 
   return (

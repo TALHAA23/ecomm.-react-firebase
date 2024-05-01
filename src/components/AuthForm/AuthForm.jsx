@@ -19,6 +19,10 @@ export default function AuthForm() {
     useMutation({
       mutationKey: ["signup"],
       mutationFn: handleSubmit,
+      onSuccess: () => {
+        const redirect = location?.state?.redirect;
+        navigate(redirect ? redirect : "/");
+      },
     });
 
   useEffect(() => {
@@ -35,9 +39,6 @@ export default function AuthForm() {
       currentPage == "signin"
         ? await loginUser(email, password)
         : await createUser(email, password, username);
-
-    const redirect = location?.state?.redirect;
-    if (redirect) navigate(redirect);
 
     return response;
   }

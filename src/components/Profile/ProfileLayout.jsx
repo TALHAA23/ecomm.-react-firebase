@@ -6,7 +6,7 @@ import { useQueryClient } from "@tanstack/react-query";
 
 const menuItems = [
   "account information",
-  "history",
+  "my orders",
   "shipping address",
   "review and rating",
 ];
@@ -21,6 +21,7 @@ export default function ProfileLayout() {
         <h1 className="text-lg font-bold text-cl-darker my-2">Menu</h1>
         {menuItems.map((menu, index) => (
           <NavLink
+            key={index}
             end
             to={index == 0 ? "" : menu.split(" ").join("")}
             className={({ isActive }) => `

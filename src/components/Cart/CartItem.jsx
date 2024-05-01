@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import removeItemFromCart from "../../utils/db/removeItemFromCart";
 import { useUser } from "../../hooks/UserProvider";
 import { useEffect } from "react";
@@ -73,17 +73,20 @@ const Details = () => (
 
 const Cancel = ({ itemId, deleteItem }) => {
   const user = useUser();
+  const queryClient = useQueryClient();
   const updateMessage = useMessageUpdater();
-  const { isPending, isSuccess, isError, error, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ["remove-item"],
     mutationFn: () => removeItemFromCart(user.uid, itemId),
+    onError: (err) => {
+      updateMessage(err.message);
+    },
+    onSuccess: () => {
+      deleteItem();
+      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      updateMessage("Item removed from cart");
+    },
   });
-
-  useEffect(() => {
-    if (!isSuccess && !isError) return;
-    if (isSuccess) deleteItem(itemId);
-    updateMessage(isError ? error.message : "Item removed from cart!");
-  }, [isSuccess, isError]);
 
   return (
     <button

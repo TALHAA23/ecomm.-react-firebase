@@ -1,18 +1,18 @@
 // TODO: Make the cart real time
 // TODO: Create a provider of Timeout
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import CartItem from "../components/Cart/CartItem";
-import CartSteps from "../components/Cart/CartSteps";
 import { useUser } from "../hooks/UserProvider";
 import getCartItems from "../utils/db/getCartItems";
 import Loader from "../components/Loader/Loader";
 import { useEffect, useRef, useState } from "react";
 import toggleProductsReadyState from "../utils/db/toggleProductsReadyState";
 import { useMessageUpdater } from "../hooks/MessageProvider";
-import { useNavigate } from "react-router-dom";
-import { useCartSteps, useCartStepsUpdater } from "../hooks/CartStepsProvider";
+import { Link, useNavigate } from "react-router-dom";
+import { useCartStepsUpdater } from "../hooks/CartStepsProvider";
 import calculateTotalPrice from "../assets/calculateCartTotal";
 import { useOrderDetailsUpdater } from "../hooks/OrderDetailsProvider";
+import Error from "../components/Error";
 
 export default function Cart() {
   const updateCartStep = useCartStepsUpdater();
@@ -33,7 +33,6 @@ export default function Cart() {
   const toggleItemsQuery = useMutation({
     mutationKey: ["toggle"],
     mutationFn: () => toggleProductsReadyState(user.uid, itemToToggle),
-    onMutate: () => updateMessage("This will take a movement!"),
     onSuccess: () => setItemToToggle([]),
     onError: (err) => updateMessage(err.message),
   });
@@ -100,6 +99,7 @@ export default function Cart() {
       clearTimeout(timeoutId.current);
       return;
     }
+    updateMessage("Your preference will be recorded in 10s");
     timeoutId.current = setTimeout(async () => {
       toggleItemsQuery.mutate();
     }, 10 * 1000);
@@ -108,6 +108,8 @@ export default function Cart() {
   }, [itemToToggle]);
 
   if (isPending) return <Loader />;
+  else if (isError) return <Error error={error} />;
+  else if (!data.length) return <CartIsEmpty />;
   return (
     <div className="relative mx-auto w-full max-w-[700px]">
       {items?.map((item, index) => (
@@ -132,3 +134,15 @@ export default function Cart() {
     </div>
   );
 }
+
+const CartIsEmpty = () => (
+  <div className="w-full h-[calc(100vh-100px)] flex flex-col gap-2 items-center justify-center">
+    <h1 className=" text-3xl font-bold">Cart is Empty</h1>
+    <Link
+      to="/boutique"
+      className=" text-blue-800 border-b-2 border-gray-400 hover:tracking-widest transition-all duration-100"
+    >
+      Go to shop to fill cart
+    </Link>
+  </div>
+);

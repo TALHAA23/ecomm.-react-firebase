@@ -9,7 +9,6 @@ export default async function placeOrder(userId, orderDetails) {
     placementDate: new Date(),
     status: "placed",
   };
-  await new Promise((res) => setTimeout(() => res(), 10000));
   try {
     // Add the order document to the collection
     const orderDocRef = await addDoc(ordersCollection, orderDetails);

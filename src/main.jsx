@@ -7,7 +7,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import UserProvider from "./hooks/UserProvider.jsx";
 import MessageProvider from "./hooks/MessageProvider.jsx";
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: { queries: { staleTime: 86400000 } },
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

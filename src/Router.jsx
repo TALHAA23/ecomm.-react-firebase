@@ -14,6 +14,8 @@ import AddressForm from "./components/Forms/AddressFrom";
 import Confirmation from "./components/Cart/Confirmation";
 import End from "./components/Cart/End";
 import ShippingAddresses from "./components/Profile/ShippingAddresses";
+import MyOrders from "./components/Profile/MyOrders";
+import Receipt from "./components/Receipt";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -65,6 +67,10 @@ export default function Router() {
           element: <MySuspense children={<ProductDetails />} />,
         },
         {
+          path: "/receipt",
+          element: <Receipt />,
+        },
+        {
           path: "cart",
           element: <CartLayout />,
           children: [
@@ -107,8 +113,8 @@ export default function Router() {
               index: true,
             },
             {
-              path: "history",
-              element: <h1>History goes here</h1>,
+              path: "myOrders",
+              element: <MyOrders />,
             },
             {
               path: "shippingaddress",

@@ -1,7 +1,7 @@
 import "./loader.css";
 export default function Loader() {
   return (
-    <div className="w-full h-[100vh-100px] flex items-center justify-center">
+    <div className="w-full h-[calc(100vh-100px)] flex items-center justify-center">
       <div className="loader">
         <div className="orbe" style={{ "--index": 0 }}></div>
         <div className="orbe" style={{ "--index": 1 }}></div>
