@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useCartStepsUpdater } from "../../hooks/CartStepsProvider";
-import { useMutationState } from "@tanstack/react-query";
+import { useMutationState, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 import Error from "../Error";
 
 export default function End() {
+  const queryClient = useQueryClient();
   const updateCartStep = useCartStepsUpdater();
   const states = useMutationState({
     filters: { mutationKey: ["order-placement"] },
@@ -22,7 +23,16 @@ export default function End() {
     );
 
   useEffect(() => {
-    if (orderPlacementMutation.status == "success") updateCartStep("end");
+    const invalidate = async () => {
+      if (orderPlacementMutation.status == "success") {
+        updateCartStep("end");
+        await queryClient.invalidateQueries({
+          queryKey: ["cart-items", "my-orders"],
+        });
+      }
+    };
+
+    invalidate();
   }, [orderPlacementMutation]);
   return (
     <div className="w-full flex flex-col gap-3 items-center justify-center h-[calc(100vh-100px)]">

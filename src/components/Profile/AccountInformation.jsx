@@ -24,14 +24,15 @@ export default function AccountInformation() {
           Account Information
         </h1>
         {[
-          ["username", data.username],
+          ["username", data.displayName],
           ["email", data.email],
+          ["creation date", data.metadata],
         ].map(([key, value], index) => (
           <div
             key={index}
-            className="relative px-10 py-3 bg-gray-100 rounded-lg w-full max-w-[300px]"
+            className="relative px-10 py-3 bg-gray-100 rounded-lg w-full max-w-[400px]"
           >
-            <p className=" absolute left-0 top-0 bg-black/85 text-white rounded px-3 ">
+            <p className=" absolute left-0 top-0 bg-black/85 text-white rounded px-3 capitalize ">
               {key}
             </p>
             <h1 className="text-xl font-bold pt-3">{value}</h1>

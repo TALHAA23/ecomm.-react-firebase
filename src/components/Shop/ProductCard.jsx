@@ -2,7 +2,6 @@ import { Link, useNavigate } from "react-router-dom";
 import { useUser } from "../../hooks/UserProvider";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postItemToCart from "../../utils/db/postItemToCart";
-import { useEffect } from "react";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
 
 export default function ProductCard({ id, title, desc, price }) {
@@ -40,13 +39,13 @@ const AddToCart = ({ addItemToCartFn }) => {
   const { isPending, isError, error, isSuccess, mutate } = useMutation({
     mutationKey: ["add-to-cart"],
     mutationFn: addItemToCartFn,
+    onError: (err) => {
+      updateMessage(err.message);
+    },
+    onSuccess: async () => {
+      await queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+    },
   });
-
-  useEffect(() => {
-    if (!isSuccess && !isError) return;
-    updateMessage(isError ? error.message : "Item added to cart!");
-    queryClient.invalidateQueries({ queryKey: ["cart-items"] });
-  }, [isSuccess, isError]);
 
   return (
     <div

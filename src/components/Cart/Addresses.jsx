@@ -52,7 +52,7 @@ export default function Addresses() {
   return (
     <div className=" mx-auto w-full max-w-[800px]">
       <div className="flex flex-col items-center gap-2">
-        {data ? (
+        {data.length ? (
           data.map((address, index) => (
             <AddressCard
               key={index}

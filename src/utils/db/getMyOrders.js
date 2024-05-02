@@ -5,7 +5,8 @@ export default async function getMyOrders(userId) {
   try {
     const userDoc = await getDoc(doc(usersCollection, userId));
     const userData = userDoc.data();
-    const userOrderIds = userData.myOrders;
+    const userOrderIds = userData?.myOrders;
+    if (!userOrderIds) throw new Error("You have no order");
     let orders = [];
     for (let orderId of userOrderIds) {
       const orderDoc = await getDoc(doc(ordersCollection, orderId));

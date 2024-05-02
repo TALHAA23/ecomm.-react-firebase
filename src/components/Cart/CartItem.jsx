@@ -1,7 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import removeItemFromCart from "../../utils/db/removeItemFromCart";
 import { useUser } from "../../hooks/UserProvider";
-import { useEffect } from "react";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
 
 export default function CartItem({
@@ -9,7 +8,6 @@ export default function CartItem({
   qty,
   title,
   price,
-  desc,
   ready,
   toggleItem,
   changeItemQty,
@@ -23,7 +21,7 @@ export default function CartItem({
       <Cancel itemId={id} deleteItem={deleteItem} />
       <Counter itemId={id} qty={qty} changeItemQty={changeItemQty} />
       <ImageAndSelection readyToCheckout={ready} />
-      <Details />
+      <Details title={title} price={price} />
     </div>
   );
 }
@@ -64,10 +62,10 @@ const ImageAndSelection = ({ readyToCheckout }) => (
   </div>
 );
 
-const Details = () => (
+const Details = ({ title, price }) => (
   <div>
-    <h1 className=" text-lg font-bold">Poussin arbor</h1>
-    <h3 className=" font-bold text-cl-darker">$10</h3>
+    <h1 className=" text-lg font-bold">{title}</h1>
+    <h3 className=" font-bold text-cl-darker">${price}</h3>
   </div>
 );
 

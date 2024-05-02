@@ -5,6 +5,8 @@ import getUserField from "../../utils/db/getUserField";
 import updateShippingAddress from "../../utils/db/updateShippingAddress";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
 import { useRef } from "react";
+import Error from "../Error";
+import NoResult from "../NoResult";
 
 export default function ShippingAddresses() {
   const user = useUser();
@@ -31,6 +33,14 @@ export default function ShippingAddresses() {
     updateMessage("We will record your preferance in 5s");
   };
   if (isPending) return <Loader />;
+  else if (isError) return <Error error={error} />;
+  else if (!data || !data.length)
+    return (
+      <NoResult
+        title="no address found"
+        desc="you have not added address, in your checkout proccess you will be asked to add one you can skip for now"
+      />
+    );
 
   return (
     <div className="mx-auto my-10 w-full max-w-[800px]">

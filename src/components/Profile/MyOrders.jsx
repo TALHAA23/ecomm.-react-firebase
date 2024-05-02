@@ -5,17 +5,17 @@ import { useUser } from "../../hooks/UserProvider";
 import getMyOrders from "../../utils/db/getMyOrders";
 import Loader from "../Loader/Loader";
 import Error from "../Error";
+import NoResult from "../NoResult";
 
 export default function MyOrders() {
   const user = useUser();
   const [myOrders, setMyOrders] = useState([]);
   const [searchParam, setSearchParam] = useSearchParams();
 
-  const { isPending, isSuccess, isError, error, data } = useQuery({
+  const { isFetching, isSuccess, isError, error, data } = useQuery({
     queryKey: ["my-orders"],
     queryFn: () => getMyOrders(user.uid),
   });
-
   const handleChangeInSearchParam = (newParam) => {
     if (newParam) searchParam.set("q", newParam);
     else searchParam.delete("q");
@@ -37,9 +37,15 @@ export default function MyOrders() {
     if (!isSuccess) return;
     setMyOrders(data);
   }, [isSuccess]);
-
-  if (isPending) return <Loader />;
+  if (isFetching) return <Loader />;
   else if (isError) return <Error error={error} />;
+  else if (!data || !data.length)
+    return (
+      <NoResult
+        title="You have no orders"
+        desc="make some orders and you will see them here"
+      />
+    );
 
   return (
     <div className="w-full max-w-900px] my-8 mx-auto px-2">

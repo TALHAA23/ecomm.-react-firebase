@@ -24,7 +24,7 @@ export default function Cart() {
   const [items, setItems] = useState();
   const [cartTotal, setCartTotal] = useState(0);
   const [itemToToggle, setItemToToggle] = useState([]);
-  const { isPending, isSuccess, isError, error, data } = useQuery({
+  const { isPending, isSuccess, isFetching, isError, error, data } = useQuery({
     queryKey: ["cart-items"],
     queryFn: () => getCartItems(user.uid, setItems),
     staleTime: 86400000,
@@ -86,9 +86,9 @@ export default function Cart() {
     }
   };
   useEffect(() => {
-    if (!isSuccess) return;
+    if (!isSuccess && !isFetching) return;
     setItems(data);
-  }, [isSuccess]);
+  }, [isSuccess, isFetching]);
   useEffect(() => {
     if (!items) return;
     setCartTotal(calculateTotalPrice(items));
