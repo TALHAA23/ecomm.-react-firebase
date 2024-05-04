@@ -2,9 +2,14 @@ import { useState, useEffect } from "react";
 import { createContext, useContext } from "react";
 import { onAuthStateChanged, getIdTokenResult } from "@firebase/auth";
 import { auth } from "../assets/firebase";
+import ClientApp from "../components/ClientApp";
+import AdminApp from "../admin/AdminApp";
 const UserContext = createContext();
-export const useUser = () => useContext(UserContext);
+export const useUser = () => useContext(UserContext)[0];
+export const useUI = () => useContext(UserContext)[1];
 export default function UserProvider({ children }) {
+  // const [UI, setUI] = useState(<ClientApp />);
+  const [UI, setUI] = useState(<AdminApp />);
   const [user, setUser] = useState(null);
   //   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //   const [authenticationLoading, setAuthenticationLoading] = useState(true);
@@ -16,11 +21,10 @@ export default function UserProvider({ children }) {
     if (!user) return;
     getIdTokenResult(user).then((idTokenResult) => {
       // Confirm the user is assigned the "client" role
-      console.log(idTokenResult);
       if (!!idTokenResult.claims.admin) {
-        console.log("User is a client");
+        setUI(<AdminApp />);
       } else {
-        console.log("User is not a client");
+        setUI(<ClientApp />);
       }
     });
   }, [user]);
@@ -50,5 +54,7 @@ export default function UserProvider({ children }) {
   //     })();
   //   }, [user]);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={[user, UI]}>{children}</UserContext.Provider>
+  );
 }
