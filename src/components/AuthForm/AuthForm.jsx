@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import createUser from "../../utils/authentication/signup";
@@ -24,6 +24,8 @@ export default function AuthForm() {
         navigate(redirect ? redirect : "/");
       },
     });
+
+  console.log(error);
 
   useEffect(() => {
     reset();

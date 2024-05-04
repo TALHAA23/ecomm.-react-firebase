@@ -12,6 +12,18 @@ export default function UserProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return () => unsubscribe();
   }, [auth]);
+  useEffect(() => {
+    if (!user) return;
+    getIdTokenResult(user).then((idTokenResult) => {
+      // Confirm the user is assigned the "client" role
+      console.log(idTokenResult);
+      if (!!idTokenResult.claims.admin) {
+        console.log("User is a client");
+      } else {
+        console.log("User is not a client");
+      }
+    });
+  }, [user]);
 
   //   useEffect(() => {
   //     if (!user) {
