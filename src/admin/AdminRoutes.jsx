@@ -3,7 +3,10 @@ import Layout from "./AdminComponents/Layout";
 import MainMenu from "./AdminComponents/MainMenu";
 import ManageProductsLayout from "./AdminPages/ManageProductsLayout";
 import Create from "./AdminComponents/ManageProducts/Create";
-import Delete from "./AdminComponents/ManageProducts/Delete";
+import UpdateAndDelete from "./AdminComponents/ManageProducts/UpdateAndDelete";
+import ManageUsers from "./AdminPages/ManageUsers";
+import ManageOrders from "./AdminPages/ManageOrders";
+import Receipt from "../components/Receipt";
 
 export default function AdminRoutes() {
   return useRoutes([
@@ -16,6 +19,10 @@ export default function AdminRoutes() {
           element: <MainMenu />,
         },
         {
+          path: "receipt",
+          element: <Receipt />,
+        },
+        {
           path: "manageProducts",
           element: <ManageProductsLayout />,
           children: [
@@ -24,10 +31,18 @@ export default function AdminRoutes() {
               element: <Create />,
             },
             {
-              path: "delete",
-              element: <Delete />,
+              path: "updateordelete",
+              element: <UpdateAndDelete />,
             },
           ],
+        },
+        {
+          path: "manageusers",
+          element: <ManageUsers />,
+        },
+        {
+          path: "manageorders",
+          element: <ManageOrders />,
         },
       ],
     },

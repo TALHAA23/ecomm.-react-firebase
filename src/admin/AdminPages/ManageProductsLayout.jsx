@@ -1,11 +1,11 @@
 import { NavLink, Outlet } from "react-router-dom";
 
-const menuItems = ["create", "update", "delete"];
+const menuItems = ["create", "update or delete"];
 
 export default function ManageProductsLayout() {
   return (
     <div className="flex min-h-screen">
-      <ul className=" w-[200px] bg-[#F4F4F4] my-1 px-3 flex flex-col">
+      <ul className=" w-[250px] bg-[#F4F4F4] my-1 px-3 flex flex-col">
         <h1 className="text-lg font-bold text-cl-darker my-2">Menu</h1>
         {menuItems.map((menu, index) => (
           <NavLink

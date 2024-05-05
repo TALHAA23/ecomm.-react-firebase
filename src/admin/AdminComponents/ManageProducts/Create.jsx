@@ -11,7 +11,6 @@ export default function Create() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const data = Object.fromEntries(formData.entries());
-    console.log(data);
     const res = await uploadProduct(data);
     return res;
   };

@@ -2,7 +2,7 @@ import { useMutation } from "@tanstack/react-query";
 import getProductByKeyword from "../../../utils/db/getProductsByKeyword";
 import ModificationCard from "./ModificationCard";
 
-export default function Delete() {
+export default function UpdateAndDelete() {
   const handleSearch = async (e) => {
     e.preventDefault();
     const res = await getProductByKeyword(e.target.search.value);
@@ -12,7 +12,6 @@ export default function Delete() {
     mutationKey: ["update"],
     mutationFn: handleSearch,
   });
-  console.log(data);
 
   return (
     <section className="bg-lighter w-full m-2 rounded">
@@ -33,10 +32,10 @@ export default function Delete() {
           ? ""
           : "No Result"}
       </h1>
-      {data?.length && (
+      {data?.length > 0 && (
         <div className="flex flex-col items-center gap-2">
-          {data.map((item) => (
-            <ModificationCard props={item} />
+          {data.map((item, index) => (
+            <ModificationCard key={index} props={item} />
           ))}
         </div>
       )}

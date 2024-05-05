@@ -1,3 +1,4 @@
+import emailjs from "@emailjs/browser";
 export default function Contact() {
   return (
     <div className=" pt-36">
@@ -30,49 +31,74 @@ export default function Contact() {
   );
 }
 
-const ContactForm = () => (
-  <div className="bg-lighter rounded-lg p-7 m-10">
-    <div className="w-1/2">
-      <h1 className="text-cl-darker font-orelega-one text-4xl my-4 capitalize">
-        entrer en contact
-      </h1>
-      <div className=" flex items-center">
-        <img
-          src="/icons/location-pin-alt-svgrepo-com.svg"
-          alt=""
-          className=" w-7"
-        />
-        <p className=" text-cl-gray">
-          Grain du sud, Route de Taniour, Km 11 Sfax, Tunisie
-        </p>
-      </div>
-      <div className=" flex items-center">
-        <img src="/icons/phone-flip-svgrepo-com.svg" alt="" className=" w-7" />
-        <p className=" text-cl-gray">+216 28 997 773</p>
-      </div>
-      <h3 className="relative text-cl-gray text-center my-4 before:w-[47%] before:absolute before:h-[2px] before:bg-lime-900 before:left-0 before:top-1/2  after:absolute after:w-[47%] after:h-[2px] after:bg-lime-900 after:-right-0 after:top-1/2">
-        or
-      </h3>
-      <form className=" flex flex-col gap-2 px-4">
-        {["name", "email"].map((item, index) => (
-          <input
-            key={index}
-            type="text"
-            placeholder={item}
-            className=" w-full bg-dark h-12 rounded pl-2 text-sm"
+const ContactForm = () => {
+  //
+  const handleSubmit = (e) => {
+    console.log("hi");
+    e.preventDefault();
+
+    emailjs
+      .sendForm("service_a6icfh9", "template_ern582h", e.target, {
+        publicKey: "JjbBGjEJlqBzQd9Bm",
+      })
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error.text);
+        }
+      );
+  };
+  //
+  return (
+    <div className="bg-lighter rounded-lg p-7 m-10">
+      <div className="w-1/2">
+        <h1 className="text-cl-darker font-orelega-one text-4xl my-4 capitalize">
+          entrer en contact
+        </h1>
+        <div className=" flex items-center">
+          <img
+            src="/icons/location-pin-alt-svgrepo-com.svg"
+            alt=""
+            className=" w-7"
           />
-        ))}
-        <textarea
-          name="message"
-          cols="20"
-          rows="4"
-          placeholder="Tell us what's is your mind"
-          className=" resize-none focus:outline-none bg-dark p-2 text-sm"
-        ></textarea>
-        <button className=" px-7 py-2 text-white font-bold  bg-darker w-fit">
-          Send
-        </button>
-      </form>
+          <p className=" text-cl-gray">
+            Grain du sud, Route de Taniour, Km 11 Sfax, Tunisie
+          </p>
+        </div>
+        <div className=" flex items-center">
+          <img
+            src="/icons/phone-flip-svgrepo-com.svg"
+            alt=""
+            className=" w-7"
+          />
+          <p className=" text-cl-gray">+216 28 997 773</p>
+        </div>
+        <h3 className="relative text-cl-gray text-center my-4 before:w-[47%] before:absolute before:h-[2px] before:bg-lime-900 before:left-0 before:top-1/2  after:absolute after:w-[47%] after:h-[2px] after:bg-lime-900 after:-right-0 after:top-1/2">
+          or
+        </h3>
+        <form onSubmit={handleSubmit} className=" flex flex-col gap-2 px-4">
+          {["name", "email"].map((item, index) => (
+            <input
+              key={index}
+              type="text"
+              placeholder={item}
+              className=" w-full bg-dark h-12 rounded pl-2 text-sm"
+            />
+          ))}
+          <textarea
+            name="message"
+            cols="20"
+            rows="4"
+            placeholder="Tell us what's is your mind"
+            className=" resize-none focus:outline-none bg-dark p-2 text-sm"
+          ></textarea>
+          <button className=" px-7 py-2 text-white font-bold  bg-darker w-fit">
+            Send
+          </button>
+        </form>
+      </div>
     </div>
-  </div>
-);
+  );
+};

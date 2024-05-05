@@ -20,7 +20,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const auth = getAuth(app);
 
-// connectAuthEmulator(auth, "http://127.0.0.1:9099");
+connectAuthEmulator(auth, "http://127.0.0.1:9099");
 export const productCollection = collection(db, "products");
 export const usersCollection = collection(db, "users");
 export const ordersCollection = collection(db, "orders");

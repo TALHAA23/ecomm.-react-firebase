@@ -63,7 +63,7 @@ const Menu = ({ searchParam, setParam }) => {
   const q = searchParam.get("q");
   return (
     <menu className="flex justify-around bg-light rounded py-3 my-1">
-      {["", "placed", "shipped", "completed"].map((item, index) => (
+      {["", "placed", "shipped", "delivered"].map((item, index) => (
         <li
           key={index}
           onClick={() => setParam(item)}

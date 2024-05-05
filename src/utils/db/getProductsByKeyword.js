@@ -7,7 +7,6 @@ export default async function getProductByKeyword(
 ) {
   const [property, order] = sort;
   const lowercasedKeyword = keyword.toLowerCase().trim();
-  console.log(lowercasedKeyword);
   // Create a range for the query
   const endKeyword = lowercasedKeyword.replace(/.$/, (c) =>
     String.fromCharCode(c.charCodeAt(0) + 1)

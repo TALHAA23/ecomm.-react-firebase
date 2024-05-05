@@ -25,8 +25,6 @@ export default function AuthForm() {
       },
     });
 
-  console.log(error);
-
   useEffect(() => {
     reset();
   }, [location]);

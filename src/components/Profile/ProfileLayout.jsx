@@ -8,7 +8,7 @@ const menuItems = [
   "account information",
   "my orders",
   "shipping address",
-  "review and rating",
+  "notifications",
 ];
 
 export default function ProfileLayout() {

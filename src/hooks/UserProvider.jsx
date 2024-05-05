@@ -5,11 +5,9 @@ import { auth } from "../assets/firebase";
 import ClientApp from "../components/ClientApp";
 import AdminApp from "../admin/AdminApp";
 const UserContext = createContext();
-export const useUser = () => useContext(UserContext)[0];
-export const useUI = () => useContext(UserContext)[1];
 export default function UserProvider({ children }) {
   // const [UI, setUI] = useState(<ClientApp />);
-  const [UI, setUI] = useState(<AdminApp />);
+  const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
   //   const [isAuthenticated, setIsAuthenticated] = useState(false);
   //   const [authenticationLoading, setAuthenticationLoading] = useState(true);
@@ -55,6 +53,9 @@ export default function UserProvider({ children }) {
   //   }, [user]);
 
   return (
-    <UserContext.Provider value={[user, UI]}>{children}</UserContext.Provider>
+    <UserContext.Provider value={{ user, UI }}>{children}</UserContext.Provider>
   );
 }
+
+export const useUser = () => useContext(UserContext)?.user;
+export const useUI = () => useContext(UserContext)?.UI;

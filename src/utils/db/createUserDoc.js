@@ -8,5 +8,6 @@ export default async function createUserDoc(userId, data) {
     cart: [],
     myOrders: [],
     shippingDetails: [],
+    notifications: [],
   });
 }

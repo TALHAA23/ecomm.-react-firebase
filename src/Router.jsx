@@ -16,6 +16,7 @@ import End from "./components/Cart/End";
 import ShippingAddresses from "./components/Profile/ShippingAddresses";
 import MyOrders from "./components/Profile/MyOrders";
 import Receipt from "./components/Receipt";
+import Notifications from "./components/Profile/Notifications";
 
 const Welcome = lazy(() => import("./pages/Welcome"));
 const Services = lazy(() => import("./pages/Services"));
@@ -119,6 +120,10 @@ export default function Router() {
             {
               path: "shippingaddress",
               element: <ShippingAddresses />,
+            },
+            {
+              path: "notifications",
+              element: <Notifications />,
             },
           ],
         },

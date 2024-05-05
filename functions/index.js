@@ -19,6 +19,7 @@
 // });
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
+const cors = require("cors")({ origin: true });
 
 // TODO: Replace the following with the path to your service account key file
 const serviceAccount = require("./e-commerce-7bd3f-firebase-adminsdk-62zdi-95c672fd54.json");
@@ -60,15 +61,37 @@ exports.assignUserRole = functions.auth.user().onCreate(async (user) => {
   }
 });
 
-// exports.userCreated = functions.auth.user().onCreate(async (user) => {
-//   // Set custom user claims on this newly created user.
-//   const res = await admin
-//     .auth()
-//     .setCustomUserClaims(user.uid, { role: "admin" });
-//   // The new custom claims will propagate to the user's ID token the
-//   // next time a new one is issued.
+// List all users
+exports.listAllUsers = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const listAllUsers = await admin.auth().listUsers();
+    res.send(listAllUsers);
+  });
+});
 
-//   // Log the user's details
-//   console.log(user.uid);
-//   console.log(user.displayName);
-// });
+// Delete a user
+exports.deleteUser = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    const { uid } = JSON.parse(req.body);
+    if (!uid) {
+      res.status(400).send("Missing UID");
+      return;
+    }
+    await admin.auth().deleteUser(uid);
+    res.send(`User with UID ${uid} has been deleted`);
+  });
+});
+
+// Update a user to disable him
+exports.disableUser = functions.https.onRequest((req, res) => {
+  cors(req, res, async () => {
+    console.log(req.body);
+    const { uid, condition } = JSON.parse(req.body);
+    if (!uid) {
+      res.status(400).send("Missing UID");
+      return;
+    }
+    await admin.auth().updateUser(uid, { disabled: condition });
+    res.send(`User with UID ${uid} has been disabled`);
+  });
+});
