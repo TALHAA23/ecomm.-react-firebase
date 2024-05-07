@@ -23,9 +23,11 @@ export default function Receipt() {
         </p>
       </div>
       <div className="my-3 flex flex-col gap-1">
-        {orderDetails?.checkoutItems?.map(({ title, price, qty }, index) => (
-          <Item key={index} title={title} price={price} qty={qty} />
-        ))}
+        {orderDetails?.checkoutItems?.map(
+          ({ title, price, qty, img }, index) => (
+            <Item key={index} title={title} price={price} qty={qty} img={img} />
+          )
+        )}
       </div>
       {/* address */}
       <Line />
@@ -42,13 +44,9 @@ export default function Receipt() {
   );
 }
 
-const Item = ({ title, price, qty }) => (
+const Item = ({ title, price, qty, img }) => (
   <div className="flex bg-dark shadow-sm">
-    <img
-      className="w-[20%] aspect-auto object-cover "
-      src="/images/chick.png"
-      alt="img"
-    />
+    <img className="w-[20%] aspect-auto object-cover " src={img} alt="img" />
     <div className=" p-3">
       <h1 className="text-lg font-bold">{title}</h1>
       <p className="text-slate-600">${price}</p>

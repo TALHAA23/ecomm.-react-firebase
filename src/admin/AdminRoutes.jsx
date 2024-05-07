@@ -7,6 +7,7 @@ import UpdateAndDelete from "./AdminComponents/ManageProducts/UpdateAndDelete";
 import ManageUsers from "./AdminPages/ManageUsers";
 import ManageOrders from "./AdminPages/ManageOrders";
 import Receipt from "../components/Receipt";
+import ManageQuries from "./AdminPages/ManageQuries";
 
 export default function AdminRoutes() {
   return useRoutes([
@@ -43,6 +44,10 @@ export default function AdminRoutes() {
         {
           path: "manageorders",
           element: <ManageOrders />,
+        },
+        {
+          path: "managequries",
+          element: <ManageQuries />,
         },
       ],
     },

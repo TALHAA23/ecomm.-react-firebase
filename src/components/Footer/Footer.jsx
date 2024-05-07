@@ -4,6 +4,14 @@ const contact = [
   "Grain du sud Route de Taniour, Km 11 Sfax, Tunisie",
   "+216 28 997 773",
 ];
+const pages = [
+  "services",
+  "nos nutritions",
+  "nos Poussins",
+  "boutique",
+  "nos poulets",
+  "contact",
+];
 
 export default function Footer() {
   return (
@@ -16,7 +24,9 @@ export default function Footer() {
         <FooterList listTitle="Contact" listItems={contact} />
         <FooterList
           listTitle="Services"
-          listItems={Array(5).fill("services")}
+          listItems={pages.map((page) => (
+            <Link to={page.split(" ").join("")}>{page}</Link>
+          ))}
         />
       </div>
       <SocialMediaLinks />

@@ -99,7 +99,7 @@ const ItemCard = ({ orderDetails }) => {
   return (
     <div className="relative w-full rounded p-2 bg-light h-32 flex">
       <img
-        src="/images/chick.png"
+        src={orderDetails.img}
         alt="img"
         className="h-full aspect-square rounded"
       />

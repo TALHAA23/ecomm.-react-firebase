@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom";
 
-const mainMenu = ["manage products", "manage users", "manage orders"];
+const mainMenu = [
+  "manage products",
+  "manage users",
+  "manage orders",
+  "manage quries",
+];
 export default function MainMenu() {
   return (
     <section className="min-h-[calc(100vh-60px)] flex items-center justify-center">

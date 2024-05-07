@@ -1,4 +1,8 @@
-import emailjs from "@emailjs/browser";
+import GoogleMapReact from "google-map-react";
+import { useMutation } from "@tanstack/react-query";
+import addQuery from "../utils/db/addQuery";
+import { useMessageUpdater } from "../hooks/MessageProvider";
+
 export default function Contact() {
   return (
     <div className=" pt-36">
@@ -32,27 +36,34 @@ export default function Contact() {
 }
 
 const ContactForm = () => {
-  //
-  const handleSubmit = (e) => {
-    console.log("hi");
+  const updateMessage = useMessageUpdater();
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    emailjs
-      .sendForm("service_a6icfh9", "template_ern582h", e.target, {
-        publicKey: "JjbBGjEJlqBzQd9Bm",
-      })
-      .then(
-        () => {
-          console.log("SUCCESS!");
-        },
-        (error) => {
-          console.log("FAILED...", error.text);
-        }
-      );
+    const formData = new FormData(e.target);
+    const formDataAsObj = Object.fromEntries(formData.entries());
+    await addQuery(formDataAsObj);
   };
-  //
+  const { isPending, mutate } = useMutation({
+    mutationKey: ["send-query"],
+    mutationFn: handleSubmit,
+    onSuccess: () => {
+      updateMessage("Your query is recored you will get an email once respond");
+    },
+    onError: (err) => {
+      updateMessage(err.message);
+    },
+  });
+
+  const defaultProps = {
+    center: {
+      lat: 10.99835602,
+      lng: 77.01502627,
+    },
+    zoom: 11,
+  };
+
   return (
-    <div className="bg-lighter rounded-lg p-7 m-10">
+    <div className="bg-lighter flex gap-2 rounded-lg p-7 m-10 border-2 h-[500px]">
       <div className="w-1/2">
         <h1 className="text-cl-darker font-orelega-one text-4xl my-4 capitalize">
           entrer en contact
@@ -78,9 +89,10 @@ const ContactForm = () => {
         <h3 className="relative text-cl-gray text-center my-4 before:w-[47%] before:absolute before:h-[2px] before:bg-lime-900 before:left-0 before:top-1/2  after:absolute after:w-[47%] after:h-[2px] after:bg-lime-900 after:-right-0 after:top-1/2">
           or
         </h3>
-        <form onSubmit={handleSubmit} className=" flex flex-col gap-2 px-4">
+        <form onSubmit={mutate} className=" flex flex-col gap-2 px-4">
           {["name", "email"].map((item, index) => (
             <input
+              name={item}
               key={index}
               type="text"
               placeholder={item}
@@ -94,10 +106,19 @@ const ContactForm = () => {
             placeholder="Tell us what's is your mind"
             className=" resize-none focus:outline-none bg-dark p-2 text-sm"
           ></textarea>
-          <button className=" px-7 py-2 text-white font-bold  bg-darker w-fit">
-            Send
+          <button
+            disabled={isPending}
+            className=" px-7 py-2 text-white font-bold  bg-darker w-fit disabled:opacity-80"
+          >
+            {isPending ? "Sending..." : "Send"}
           </button>
         </form>
+      </div>
+      <div className="w-1/2 h-full">
+        <GoogleMapReact
+          defaultCenter={defaultProps.center}
+          defaultZoom={defaultProps.zoom}
+        ></GoogleMapReact>
       </div>
     </div>
   );

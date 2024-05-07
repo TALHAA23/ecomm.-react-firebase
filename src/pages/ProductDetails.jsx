@@ -13,7 +13,6 @@ export default function ProductDetails() {
   const { isPending, isError, error, data } = useQuery({
     queryKey: [productId],
     queryFn: () => getProductById(productId),
-    staleTime: 86400000,
   });
 
   if (isPending) return <Loader />;
@@ -23,7 +22,7 @@ export default function ProductDetails() {
     <div className="h-screen max-h-[600px]">
       <ShopHeader />
       <div className="h-[calc(100%-60px)] flex">
-        <ImagesArea />
+        <ImagesArea img={data?.img} />
         <Details {...data} />
       </div>
       <section className="flex"></section>
@@ -31,25 +30,9 @@ export default function ProductDetails() {
   );
 }
 
-const ImagesArea = () => (
+const ImagesArea = ({ img }) => (
   <div className=" w-1/2 h-full  ">
-    <img
-      src="/images/chick.png"
-      alt=""
-      className="w-full h-[80%] object-cover "
-    />
-    <div className="  flex gap-3 items-center h-[20%] justify-center py-2">
-      {Array(3)
-        .fill(null)
-        .map((item, index) => (
-          <img
-            key={index}
-            src="/images/chick.png"
-            alt="img"
-            className=" h-full aspect-square object-contain border border-gray-200 rounded"
-          />
-        ))}
-    </div>
+    <img src={img} alt="img" className="w-full h-full object-cover " />
   </div>
 );
 
@@ -94,7 +77,7 @@ const ButtonsAndRating = () => {
 
   return (
     <div>
-      <div className="flex items-center gap-2 my-2">
+      {/* <div className="flex items-center gap-2 my-2">
         <div className="flex">
           {Array(5)
             .fill(null)
@@ -108,7 +91,7 @@ const ButtonsAndRating = () => {
             ))}
         </div>
         <p className="text-sm">12 reviews</p>
-      </div>
+      </div> */}
       <div className="w-full flex flex-col lg:flex-row gap-1">
         <button
           onClick={mutate}

@@ -1,11 +1,9 @@
 import ProductsArea from "./ProductsArea";
-import PromotionArea from "./PromotionArea";
 
 export default function MainShop() {
   return (
-    <div className="grid grid-cols-1 lg:grid-cols-[auto_200px]">
+    <div className="w-full max-w-[1200px] mx-auto">
       <ProductsArea />
-      <PromotionArea />
     </div>
   );
 }

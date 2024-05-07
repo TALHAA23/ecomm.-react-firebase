@@ -8,6 +8,7 @@ export default function CartItem({
   qty,
   title,
   price,
+  img,
   ready,
   toggleItem,
   changeItemQty,
@@ -20,7 +21,7 @@ export default function CartItem({
     >
       <Cancel itemId={id} deleteItem={deleteItem} />
       <Counter itemId={id} qty={qty} changeItemQty={changeItemQty} />
-      <ImageAndSelection readyToCheckout={ready} />
+      <ImageAndSelection img={img} readyToCheckout={ready} />
       <Details title={title} price={price} />
     </div>
   );
@@ -51,9 +52,9 @@ const Counter = ({ itemId, qty, changeItemQty }) => {
   );
 };
 
-const ImageAndSelection = ({ readyToCheckout }) => (
+const ImageAndSelection = ({ img, readyToCheckout }) => (
   <div className="relative h-full aspect-square rounded">
-    <img src="/images/chick.png" alt="img" className="h-full w-full" />
+    <img src={img} alt="img" className="h-full w-full object-cover" />
     {readyToCheckout && (
       <div className=" absolute top-0 rounded w-full h-full bg-black/50 flex items-center justify-center">
         <img src="/icons/tick-svgrepo-com.svg" alt="tick" />

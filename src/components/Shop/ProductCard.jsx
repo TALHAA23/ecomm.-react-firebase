@@ -4,7 +4,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import postItemToCart from "../../utils/db/postItemToCart";
 import { useMessageUpdater } from "../../hooks/MessageProvider";
 
-export default function ProductCard({ id, title, desc, price }) {
+export default function ProductCard({ id, title, desc, price, img }) {
   const user = useUser();
   const navigate = useNavigate();
 
@@ -21,7 +21,7 @@ export default function ProductCard({ id, title, desc, price }) {
         userId={user?.uid}
         itemId={id}
       />
-      <Image />
+      <Image img={img} />
       <Desc title={title} desc={desc} itemId={id} />
     </div>
   );
@@ -66,31 +66,18 @@ const AddToCart = ({ addItemToCartFn }) => {
   );
 };
 
-const Image = () => (
+const Image = ({ img }) => (
   <img
-    src="/images/chick.png"
+    src={img}
     alt="chick"
     className="w-full h-[50%] object-cover rounded-t"
   />
 );
 
 const Desc = ({ title, desc, itemId }) => {
-  // const navigate = useNavigate();
-  // const updateMessage = useMessageUpdater();
-
-  // const { isPending, isError, error, isSuccess, mutate } = useMutation({
-  //   mutationKey: ["add-to-cart"],
-  //   mutationFn: addItemToCartFn,
-  // });
-
-  // useEffect(() => {
-  //   if (!isSuccess && !isError) return;
-  //   isError ? updateMessage(error.message) : navigate("/cart");
-  // }, [isSuccess, isError]);
-
   return (
     <div className=" grow flex flex-col p-1 bg-gray-200 rounded-b">
-      <h1 className="font-semibold">{title}</h1>
+      <h1 className="font-semibold capitalize">{title}</h1>
       <div className="w-full flex flex-col justify-between h-full">
         <p className=" ml-2 text-sm">
           {desc.length <= 110 ? desc : desc.substring(0, 110) + "..."}

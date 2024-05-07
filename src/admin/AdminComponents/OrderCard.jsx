@@ -24,7 +24,7 @@ export default function OrderCard({ orderDetails }) {
     <div className="relative w-full rounded p-2 bg-light shadow-sm shadow-slate-500/75">
       <div className="flex h-32">
         <img
-          src="/images/chick.png"
+          src={orderDetails.img}
           alt="img"
           className="h-full aspect-square rounded"
         />
