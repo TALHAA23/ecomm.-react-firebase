@@ -24,7 +24,7 @@ export default function AdminRoutes() {
           element: <Receipt />,
         },
         {
-          path: "manageProducts",
+          path: "gérerlesproduits",
           element: <ManageProductsLayout />,
           children: [
             {
@@ -32,21 +32,21 @@ export default function AdminRoutes() {
               element: <Create />,
             },
             {
-              path: "updateordelete",
+              path: "mettreàjourousupprimer",
               element: <UpdateAndDelete />,
             },
           ],
         },
         {
-          path: "manageusers",
+          path: "gérerlesutilisateurs",
           element: <ManageUsers />,
         },
         {
-          path: "manageorders",
+          path: "gérerlescommandes",
           element: <ManageOrders />,
         },
         {
-          path: "managequries",
+          path: "gérerlesrequêtes",
           element: <ManageQuries />,
         },
       ],

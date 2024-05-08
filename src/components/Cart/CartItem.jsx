@@ -82,7 +82,7 @@ const Cancel = ({ itemId, deleteItem }) => {
     },
     onSuccess: () => {
       deleteItem();
-      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      queryClient.refetchQueries({ queryKey: ["cart-items"] });
       updateMessage("Item removed from cart");
     },
   });

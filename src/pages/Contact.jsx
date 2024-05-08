@@ -1,3 +1,9 @@
+import {
+  APIProvider,
+  Map,
+  Marker,
+  AdvancedMarker,
+} from "@vis.gl/react-google-maps";
 import GoogleMapReact from "google-map-react";
 import { useMutation } from "@tanstack/react-query";
 import addQuery from "../utils/db/addQuery";
@@ -53,7 +59,7 @@ const ContactForm = () => {
       updateMessage(err.message);
     },
   });
-
+  const position = { lat: 53.54992, lng: 10.00678 };
   const defaultProps = {
     center: {
       lat: 10.99835602,
@@ -108,17 +114,22 @@ const ContactForm = () => {
           ></textarea>
           <button
             disabled={isPending}
-            className=" px-7 py-2 text-white font-bold  bg-darker w-fit disabled:opacity-80"
+            className="px-7 py-2 text-white font-bold  bg-darker w-fit disabled:opacity-80"
           >
-            {isPending ? "Sending..." : "Send"}
+            Envoyer
           </button>
         </form>
       </div>
       <div className="w-1/2 h-full">
-        <GoogleMapReact
+        <APIProvider apiKey={"AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI"}>
+          <Map defaultCenter={position} defaultZoom={10}>
+            <AdvancedMarker position={position} />
+          </Map>
+        </APIProvider>
+        {/* <GoogleMapReact
           defaultCenter={defaultProps.center}
           defaultZoom={defaultProps.zoom}
-        ></GoogleMapReact>
+        ></GoogleMapReact> */}
       </div>
     </div>
   );

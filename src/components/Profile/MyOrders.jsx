@@ -42,8 +42,8 @@ export default function MyOrders() {
   else if (!data || !data.length)
     return (
       <NoResult
-        title="You have no orders"
-        desc="make some orders and you will see them here"
+        title="Vous n'avez aucune commande"
+        desc="passez quelques commandes et vous les verrez ici"
       />
     );
 

@@ -1,6 +1,6 @@
 import { NavLink, Outlet } from "react-router-dom";
 
-const menuItems = ["create", "update or delete"];
+const menuItems = ["créer", "mettre à jour ou supprimer"];
 
 export default function ManageProductsLayout() {
   return (

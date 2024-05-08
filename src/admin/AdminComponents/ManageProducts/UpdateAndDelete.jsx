@@ -19,18 +19,18 @@ export default function UpdateAndDelete() {
         <input
           type="search"
           name="search"
-          placeholder="search item and press enter"
+          placeholder="recherchez l'élément et appuyez sur Entrée"
           className=" rounded-full my-2 border-2 h-10 w-full max-w-[300px] pl-3 placeholder:text-sm placeholder:font-light"
         />
       </form>
       <h1 className="text-center text-lg font-bold my-4">
         {isPending
-          ? "Searching..."
+          ? "Recherche..."
           : isError
           ? error.message
           : data?.length
           ? ""
-          : "No Result"}
+          : "Pas de résultat"}
       </h1>
       {data?.length > 0 && (
         <div className="flex flex-col items-center gap-2">

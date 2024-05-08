@@ -1,17 +1,17 @@
 import { Link } from "react-router-dom";
 
 const mainMenu = [
-  "manage products",
-  "manage users",
-  "manage orders",
-  "manage quries",
+  "gérer les produits",
+  "gérer les utilisateurs",
+  "gérer les commandes",
+  "gérer les requêtes",
 ];
 export default function MainMenu() {
   return (
     <section className="min-h-[calc(100vh-60px)] flex items-center justify-center">
       <menu className=" border-2 border-[#B2B377] px-2 py-5 rounded-md w-full max-w-[500px] flex gap-1 flex-col">
         <h1 className="text-center text-4xl font-orelega-one my-4">
-          Main Menu
+          Menu principal
         </h1>
         {mainMenu.map((menu, index) => (
           <Link

@@ -24,9 +24,9 @@ export default function AccountInformation() {
           Account Information
         </h1>
         {[
-          ["username", data.displayName],
+          ["nom d'utilisateur", data.displayName],
           ["email", data.email],
-          ["creation date", data.metadata],
+          ["date de création", data.metadata],
         ].map(([key, value], index) => (
           <div
             key={index}

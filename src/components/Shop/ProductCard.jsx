@@ -9,7 +9,7 @@ export default function ProductCard({ id, title, desc, price, img }) {
   const navigate = useNavigate();
 
   const addItemToCart = async () => {
-    if (!user) navigate("/auth/signin");
+    if (!user) return navigate("/auth/signin");
     await postItemToCart(user.uid, id);
   };
 
@@ -36,14 +36,14 @@ const PriceTag = ({ price }) => (
 const AddToCart = ({ addItemToCartFn }) => {
   const updateMessage = useMessageUpdater();
   const queryClient = useQueryClient();
-  const { isPending, isError, error, isSuccess, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ["add-to-cart"],
     mutationFn: addItemToCartFn,
     onError: (err) => {
       updateMessage(err.message);
     },
     onSuccess: async () => {
-      await queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      await queryClient.refetchQueries({ queryKey: ["cart-items"] });
     },
   });
 

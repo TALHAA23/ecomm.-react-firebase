@@ -3,17 +3,19 @@ import { useUser } from "../../hooks/UserProvider";
 import ProtectRoute from "../ProtectRoute";
 import signOutUser from "../../utils/authentication/signout";
 import { useQueryClient } from "@tanstack/react-query";
+import { useMessageUpdater } from "../../hooks/MessageProvider";
 
 const menuItems = [
-  "account information",
-  "my orders",
-  "shipping address",
+  "Information sur le compte",
+  "Mes commandes",
+  "adresse de livraison",
   "notifications",
 ];
 
 export default function ProfileLayout() {
-  const user = useUser();
   const queryClient = useQueryClient();
+  const user = useUser();
+  const updateMessage = useMessageUpdater();
   if (!user) return <ProtectRoute redirect="/profile" />;
   return (
     <div className="flex min-h-screen">
@@ -33,13 +35,17 @@ export default function ProfileLayout() {
           </NavLink>
         ))}
         <button
-          onClick={() => {
-            queryClient.invalidateQueries();
-            signOutUser();
+          onClick={async () => {
+            try {
+              await queryClient.invalidateQueries();
+              signOutUser();
+            } catch (err) {
+              updateMessage(err.message);
+            }
           }}
           className="w-full py-3 text-left my-1 rounded pl-2 capitalize bg-gray-300 hover:bg-gray-300/50"
         >
-          Sign Out
+          Ee déconnecter
         </button>
       </ul>
       <Outlet />

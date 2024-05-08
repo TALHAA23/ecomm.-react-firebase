@@ -57,21 +57,20 @@ const ButtonsAndRating = () => {
 
   const addItemToCart = async (event) => {
     const { name } = event.target.dataset;
-    if (!user) navigate("/auth/signin");
+    if (!user) return navigate("/auth/signin");
     await postItemToCart(user.uid, productId);
     name == "addToCart"
       ? updateMessage("Item added to cart")
       : navigate("/cart");
   };
-  const { isPending, isError, error, isSuccess, mutate } = useMutation({
+  const { isPending, mutate } = useMutation({
     mutationKey: ["add-to-cart"],
     mutationFn: addItemToCart,
     onError: (error) => {
       updateMessage(error.message);
     },
-
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["cart-items"] });
+      queryClient.refetchQueries({ queryKey: ["cart-items"] });
     },
   });
 

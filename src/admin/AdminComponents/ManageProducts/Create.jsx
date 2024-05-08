@@ -26,7 +26,7 @@ export default function Create() {
         className="m-5 w-full max-w-[400px] bg-lighter flex flex-col py-4 p-2"
       >
         <h1 className="text-center text-2xl font-bold text-cl-darker my-3">
-          Upload new product
+          Télécharger un nouveau produit
         </h1>
         {isError && (
           <p className="text-center text-sm text-red-700">{error.message}</p>

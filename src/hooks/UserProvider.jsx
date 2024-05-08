@@ -9,8 +9,6 @@ export default function UserProvider({ children }) {
   // const [UI, setUI] = useState(<ClientApp />);
   const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
-  //   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  //   const [authenticationLoading, setAuthenticationLoading] = useState(true);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return () => unsubscribe();
@@ -18,7 +16,6 @@ export default function UserProvider({ children }) {
   useEffect(() => {
     if (!user) return;
     getIdTokenResult(user).then((idTokenResult) => {
-      // Confirm the user is assigned the "client" role
       if (!!idTokenResult.claims.admin) {
         setUI(<AdminApp />);
       } else {
@@ -26,32 +23,6 @@ export default function UserProvider({ children }) {
       }
     });
   }, [user]);
-
-  //   useEffect(() => {
-  //     if (!user) {
-  //       setIsAuthenticated(false);
-  //       setAuthenticationLoading(false);
-  //       return;
-  //     }
-
-  //     (async () => {
-  //       await getIdTokenResult(user)
-  //         .then((idTokenResult) => {
-  //           if (idTokenResult.claims) {
-  //             setIsAuthenticated(true);
-  //           } else {
-  //             setIsAuthenticated(false);
-  //           }
-  //           setAuthenticationLoading(false);
-  //         })
-  //         .catch((error) => {
-  //           console.error("Error verifying ID token:", error);
-  //           setIsAuthenticated(false);
-  //           setAuthenticationLoading(false);
-  //         });
-  //     })();
-  //   }, [user]);
-
   return (
     <UserContext.Provider value={{ user, UI }}>{children}</UserContext.Provider>
   );

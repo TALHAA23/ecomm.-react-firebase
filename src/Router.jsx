@@ -114,11 +114,11 @@ export default function Router() {
               index: true,
             },
             {
-              path: "myOrders",
+              path: "Mescommandes",
               element: <MyOrders />,
             },
             {
-              path: "shippingaddress",
+              path: "adressedelivraison",
               element: <ShippingAddresses />,
             },
             {
