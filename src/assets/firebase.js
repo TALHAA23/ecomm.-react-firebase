@@ -7,28 +7,20 @@ import { collection, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI",
-  authDomain: "e-commerce-7bd3f.firebaseapp.com",
-  projectId: "e-commerce-7bd3f",
-  storageBucket: "e-commerce-7bd3f.appspot.com",
-  messagingSenderId: "695233770176",
-  appId: "1:695233770176:web:0e426d88ba6e1e0cddb325",
+  // apiKey: "AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUGET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDINGID,
+  appId: import.meta.env.VITE_FIREBASE_APPID,
 };
-// const firebaseConfig = {
-//   apiKey: "AIzaSyBCwBTT4-HiNIssNpiMGfyAzmfn14umG90",
-//   authDomain: "grain-du-sud.firebaseapp.com",
-//   projectId: "grain-du-sud",
-//   storageBucket: "grain-du-sud.appspot.com",
-//   messagingSenderId: "689468662934",
-//   appId: "1:689468662934:web:355c8ce3f2411398994eb7",
-// };
-
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const auth = getAuth(app);
 
-connectAuthEmulator(auth, "http://127.0.0.1:9099");
+// connectAuthEmulator(auth, "http://127.0.0.1:9099");
 export const productCollection = collection(db, "products");
 export const usersCollection = collection(db, "users");
 export const ordersCollection = collection(db, "orders");
