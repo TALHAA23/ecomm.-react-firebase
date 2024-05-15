@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
+import formatDate from "../../assets/formatDate";
 
 export default function ManageUsers() {
   const [filterUser, setFilterUser] = useState();
@@ -64,7 +65,7 @@ export default function ManageUsers() {
                   user.email,
                   user.displayName,
                   user.uid,
-                  "user.metadata.lastSignInTime",
+                  user.metadata.lastSignInTime,
                 ].map((item, index) => (
                   <p
                     key={index}

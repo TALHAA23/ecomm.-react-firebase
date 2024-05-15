@@ -9,6 +9,7 @@ export default function UserProvider({ children }) {
   // const [UI, setUI] = useState(<ClientApp />);
   const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
+  console.log(user);
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return () => unsubscribe();

@@ -14,13 +14,21 @@ const firebaseConfig = {
   messagingSenderId: "695233770176",
   appId: "1:695233770176:web:0e426d88ba6e1e0cddb325",
 };
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBCwBTT4-HiNIssNpiMGfyAzmfn14umG90",
+//   authDomain: "grain-du-sud.firebaseapp.com",
+//   projectId: "grain-du-sud",
+//   storageBucket: "grain-du-sud.appspot.com",
+//   messagingSenderId: "689468662934",
+//   appId: "1:689468662934:web:355c8ce3f2411398994eb7",
+// };
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const auth = getAuth(app);
 
-// connectAuthEmulator(auth, "http://127.0.0.1:9099");
+connectAuthEmulator(auth, "http://127.0.0.1:9099");
 export const productCollection = collection(db, "products");
 export const usersCollection = collection(db, "users");
 export const ordersCollection = collection(db, "orders");

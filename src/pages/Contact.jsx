@@ -121,7 +121,7 @@ const ContactForm = () => {
         </form>
       </div>
       <div className="w-1/2 h-full">
-        <APIProvider apiKey={"AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI"}>
+        <APIProvider>
           <Map defaultCenter={position} defaultZoom={10}>
             <AdvancedMarker position={position} />
           </Map>
