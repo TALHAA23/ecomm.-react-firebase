@@ -6,7 +6,7 @@ import ClientApp from "../components/ClientApp";
 import AdminApp from "../admin/AdminApp";
 const UserContext = createContext();
 export default function UserProvider({ children }) {
-  const [UI, setUI] = useState(<AdminApp />);
+  const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
   console.log(user);
   useEffect(() => {
