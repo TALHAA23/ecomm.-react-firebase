@@ -9,7 +9,7 @@ export default function ManageUsers() {
     queryKey: ["list-users"],
     queryFn: async () => {
       const res = await fetch(
-        "http://127.0.0.1:5001/grain-du-sud/us-central1/listAllUsers"
+        "https://us-central1-grain-du-sud.cloudfunctions.net/listAllUsers"
       );
       const data = await res.json();
       return data;
@@ -46,10 +46,10 @@ export default function ManageUsers() {
         {isPending
           ? "Loading users"
           : isError
-          ? error.message
-          : !data.users.length
-          ? "No user found"
-          : ""}
+            ? error.message
+            : !data.users.length
+              ? "No user found"
+              : ""}
       </h3>
       {data?.users.length > 0 && (
         <section>
@@ -57,9 +57,8 @@ export default function ManageUsers() {
             (user, index) => (
               <div
                 key={index}
-                className={`group relative flex hover:bg-gray-100 ${
-                  user.disabled && " opacity-50"
-                }`}
+                className={`group relative flex hover:bg-gray-100 ${user.disabled && " opacity-50"
+                  }`}
               >
                 {[
                   user.email,
@@ -95,7 +94,7 @@ const Actions = ({ useruid, disabled }) => {
   const deleteUserMutation = useMutation({
     mutationKey: ["users"],
     mutationFn: async () => {
-      await fetch("http://127.0.0.1:5001/grain-du-sud/us-central1/deleteUser", {
+      await fetch("https://us-central1-grain-du-sud.cloudfunctions.net/deleteUser", {
         method: "post",
         body: JSON.stringify({ uid: useruid }),
       });
@@ -108,7 +107,7 @@ const Actions = ({ useruid, disabled }) => {
     mutationKey: ["users"],
     mutationFn: async () => {
       await fetch(
-        "http://127.0.0.1:5001/grain-du-sud/us-central1/disableUser",
+        "https://us-central1-grain-du-sud.cloudfunctions.net/disableUser",
         {
           method: "post",
           body: JSON.stringify({ uid: useruid, condition: !disabled }),
@@ -131,8 +130,8 @@ const Actions = ({ useruid, disabled }) => {
             ? "enabling"
             : "disabling"
           : disabled
-          ? "enable user"
-          : "disable user"}
+            ? "enable user"
+            : "disable user"}
       </button>
       <button
         onClick={deleteUserMutation.mutate}
