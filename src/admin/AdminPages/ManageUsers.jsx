@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
+import formatDate from "../../assets/formatDate";
 
 export default function ManageUsers() {
   const [filterUser, setFilterUser] = useState();
@@ -8,7 +9,7 @@ export default function ManageUsers() {
     queryKey: ["list-users"],
     queryFn: async () => {
       const res = await fetch(
-        "http://127.0.0.1:5001/e-commerce-7bd3f/us-central1/listAllUsers"
+        "http://127.0.0.1:5001/grain-du-sud/us-central1/listAllUsers"
       );
       const data = await res.json();
       return data;
@@ -64,7 +65,7 @@ export default function ManageUsers() {
                   user.email,
                   user.displayName,
                   user.uid,
-                  "user.metadata.lastSignInTime",
+                  user.metadata.lastSignInTime,
                 ].map((item, index) => (
                   <p
                     key={index}
@@ -94,13 +95,10 @@ const Actions = ({ useruid, disabled }) => {
   const deleteUserMutation = useMutation({
     mutationKey: ["users"],
     mutationFn: async () => {
-      await fetch(
-        "http://127.0.0.1:5001/e-commerce-7bd3f/us-central1/deleteUser",
-        {
-          method: "post",
-          body: JSON.stringify({ uid: useruid }),
-        }
-      );
+      await fetch("http://127.0.0.1:5001/grain-du-sud/us-central1/deleteUser", {
+        method: "post",
+        body: JSON.stringify({ uid: useruid }),
+      });
     },
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["list-users"] });
@@ -110,7 +108,7 @@ const Actions = ({ useruid, disabled }) => {
     mutationKey: ["users"],
     mutationFn: async () => {
       await fetch(
-        "http://127.0.0.1:5001/e-commerce-7bd3f/us-central1/disableUser",
+        "http://127.0.0.1:5001/grain-du-sud/us-central1/disableUser",
         {
           method: "post",
           body: JSON.stringify({ uid: useruid, condition: !disabled }),

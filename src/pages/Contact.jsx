@@ -4,7 +4,6 @@ import {
   Marker,
   AdvancedMarker,
 } from "@vis.gl/react-google-maps";
-import GoogleMapReact from "google-map-react";
 import { useMutation } from "@tanstack/react-query";
 import addQuery from "../utils/db/addQuery";
 import { useMessageUpdater } from "../hooks/MessageProvider";
@@ -121,15 +120,11 @@ const ContactForm = () => {
         </form>
       </div>
       <div className="w-1/2 h-full">
-        <APIProvider apiKey={"AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI"}>
+        <APIProvider>
           <Map defaultCenter={position} defaultZoom={10}>
             <AdvancedMarker position={position} />
           </Map>
         </APIProvider>
-        {/* <GoogleMapReact
-          defaultCenter={defaultProps.center}
-          defaultZoom={defaultProps.zoom}
-        ></GoogleMapReact> */}
       </div>
     </div>
   );

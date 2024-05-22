@@ -18,7 +18,9 @@ export default function Navigations() {
           <NavLink
             to={typeof item == "string" ? item.split(" ").join("") : "."}
             className={({ isActive }) =>
-              isActive ? " font-bold" : "font-normal"
+              isActive
+                ? " font-bold"
+                : "font-normal border-b-2 border-transparent hover:border-gray-300"
             }
           >
             {item}

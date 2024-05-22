@@ -42,8 +42,8 @@ const QueryContainer = ({ setError, id, name, email, message }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await emailjs.sendForm("service_a6icfh9", "template_ern582h", e.target, {
-        publicKey: "JjbBGjEJlqBzQd9Bm",
+      await emailjs.sendForm("service_keqpgbe", "template_x89yfzw", e.target, {
+        publicKey: "AjIHEyBoL4o1SsoCA",
       });
       await deleteQueryById(id);
     } catch (err) {
@@ -80,7 +80,7 @@ const QueryContainer = ({ setError, id, name, email, message }) => {
         className="w-full bg-darker rounded p-3 hidden"
       >
         <input type="text" name="name" value={name} hidden />
-        <input type="email" name="email" value={email} hidden />
+        <input type="email" name="to_email" value={email} hidden />
         <input type="text" name="query" value={message} hidden />
         <textarea
           required

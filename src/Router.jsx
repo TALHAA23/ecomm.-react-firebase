@@ -1,7 +1,6 @@
 import { useRoutes } from "react-router-dom";
 import Layout from "./components/Layout";
 import Auth from "./pages/Auth";
-import signOutUser from "./utils/authentication/signout";
 import { lazy } from "react";
 import MySuspense from "./components/MySuspense";
 import ProductDetails from "./pages/ProductDetails";

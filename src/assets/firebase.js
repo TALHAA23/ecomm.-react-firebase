@@ -7,12 +7,12 @@ import { collection, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyDCM5ZBp7Sdpgvon_e_AlCXMn19HY6h2iI",
-  authDomain: "e-commerce-7bd3f.firebaseapp.com",
-  projectId: "e-commerce-7bd3f",
-  storageBucket: "e-commerce-7bd3f.appspot.com",
-  messagingSenderId: "695233770176",
-  appId: "1:695233770176:web:0e426d88ba6e1e0cddb325",
+  apiKey: "AIzaSyBCwBTT4-HiNIssNpiMGfyAzmfn14umG90",
+  authDomain: "grain-du-sud.firebaseapp.com",
+  projectId: "grain-du-sud",
+  storageBucket: "grain-du-sud.appspot.com",
+  messagingSenderId: "689468662934",
+  appId: "1:689468662934:web:355c8ce3f2411398994eb7",
 };
 
 // Initialize Firebase
