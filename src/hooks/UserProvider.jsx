@@ -4,11 +4,12 @@ import { onAuthStateChanged, getIdTokenResult } from "@firebase/auth";
 import { auth } from "../assets/firebase";
 import ClientApp from "../components/ClientApp";
 import AdminApp from "../admin/AdminApp";
+import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 export default function UserProvider({ children }) {
   const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
-  console.log(user);
+  const navigate = useNavigate();
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, setUser);
     return () => unsubscribe();
@@ -16,8 +17,11 @@ export default function UserProvider({ children }) {
   useEffect(() => {
     if (!user) return;
     getIdTokenResult(user).then((idTokenResult) => {
+      console.log(idTokenResult);
       if (!!idTokenResult.claims.admin) {
         setUI(<AdminApp />);
+        navigate("/");
+        navi;
       } else {
         setUI(<ClientApp />);
       }

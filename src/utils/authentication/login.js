@@ -9,7 +9,7 @@ export default async function loginUser(email, password) {
       password
     );
     const user = userCredential.user;
-    return "Logged In Successfully";
+    return "logged-in successfully";
   } catch (error) {
     const errorMessage = error.message;
     throw new Error(`"Error logging in user: ${errorMessage}`);

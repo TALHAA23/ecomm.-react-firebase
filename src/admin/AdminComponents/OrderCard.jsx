@@ -24,9 +24,9 @@ export default function OrderCard({ orderDetails }) {
     <div className="relative w-full rounded p-2 bg-light shadow-sm shadow-slate-500/75">
       <div className="flex h-32">
         <img
-          src={orderDetails.img}
+          src={checkoutItems[0].img}
           alt="img"
-          className="h-full aspect-square rounded"
+          className="h-full aspect-square rounded object-cover"
         />
         <div className="grow px-2 flex flex-col justify-around">
           <h1 className="text-lg font-bold">{checkoutItems[0].title}</h1>

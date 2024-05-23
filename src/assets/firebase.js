@@ -12,7 +12,7 @@ const firebaseConfig = {
   projectId: "grain-du-sud",
   storageBucket: "grain-du-sud.appspot.com",
   messagingSenderId: "689468662934",
-  appId: "1:689468662934:web:355c8ce3f2411398994eb7"
+  appId: "1:689468662934:web:355c8ce3f2411398994eb7",
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

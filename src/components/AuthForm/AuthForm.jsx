@@ -15,14 +15,12 @@ export default function AuthForm() {
   const location = useLocation();
   const currentPage = location.pathname.split("/").pop();
   const navigate = useNavigate();
-  console.log(location.state);
   const { isPending, isSuccess, isError, error, data, mutate, reset } =
     useMutation({
       mutationKey: ["signup"],
       mutationFn: handleSubmit,
       onSuccess: () => {
         const redirect = location?.state?.redirect;
-        console.log(redirect);
         navigate(redirect ? redirect : "/");
       },
     });
