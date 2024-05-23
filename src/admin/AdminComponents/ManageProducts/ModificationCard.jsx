@@ -33,7 +33,6 @@ export default function ModificationCard({ props }) {
     const formDataToObject = Object.fromEntries(formData.entries());
 
     const lowercaseFormData = toLowercaseObject(formDataToObject);
-    console.log(lowercaseFormData);
     await updateProduct(props.id, lowercaseFormData);
   }
 

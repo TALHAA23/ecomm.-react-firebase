@@ -7,7 +7,7 @@ import AdminApp from "../admin/AdminApp";
 import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 export default function UserProvider({ children }) {
-  const [UI, setUI] = useState(<ClientApp />);
+  const [UI, setUI] = useState(<AdminApp />);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {

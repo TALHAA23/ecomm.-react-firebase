@@ -7,6 +7,7 @@ import {
 
 export default async function uploadProductImage(fileInput) {
   // Check if a file is selected
+  console.log(fileInput);
   const file = fileInput;
   const storage = getStorage();
   const storageRef = ref(storage, `products/${file.name}`);
