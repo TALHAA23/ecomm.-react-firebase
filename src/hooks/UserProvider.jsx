@@ -16,6 +16,7 @@ export default function UserProvider({ children }) {
   }, [auth]);
   useEffect(() => {
     if (!user) {
+      navigate('/')
       setUI(<ClientApp />);
       return;
     }
