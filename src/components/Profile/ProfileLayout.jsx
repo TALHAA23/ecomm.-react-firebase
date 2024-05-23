@@ -45,7 +45,7 @@ export default function ProfileLayout() {
           }}
           className="w-full py-3 text-left my-1 rounded pl-2 capitalize bg-gray-300 hover:bg-gray-300/50"
         >
-          Ee déconnecter
+          Se déconnecter
         </button>
       </ul>
       <Outlet />
