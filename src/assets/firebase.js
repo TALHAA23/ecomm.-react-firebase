@@ -7,12 +7,7 @@ import { collection, getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBCwBTT4-HiNIssNpiMGfyAzmfn14umG90",
-  authDomain: "grain-du-sud.firebaseapp.com",
-  projectId: "grain-du-sud",
-  storageBucket: "grain-du-sud.appspot.com",
-  messagingSenderId: "689468662934",
-  appId: "1:689468662934:web:355c8ce3f2411398994eb7",
+  // configutation here
 };
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
