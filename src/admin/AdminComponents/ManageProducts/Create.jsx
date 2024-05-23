@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import uploadProduct from "../../adminUtils/upload";
 
 const inputs = [
@@ -7,6 +7,7 @@ const inputs = [
   ["text", "desc"],
 ];
 export default function Create() {
+  const queryClient = useQueryClient();
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
@@ -17,6 +18,11 @@ export default function Create() {
   const { isPending, isError, error, mutate } = useMutation({
     mutationKey: ["upload"],
     mutationFn: handleSubmit,
+    onSuccess: () => {
+      queryClient.refetchQueries({
+        queryKey: ["all-products"],
+      });
+    },
   });
 
   return (

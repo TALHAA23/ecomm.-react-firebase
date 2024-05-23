@@ -1,9 +1,3 @@
-import {
-  APIProvider,
-  Map,
-  Marker,
-  AdvancedMarker,
-} from "@vis.gl/react-google-maps";
 import { useMutation } from "@tanstack/react-query";
 import addQuery from "../utils/db/addQuery";
 import { useMessageUpdater } from "../hooks/MessageProvider";
@@ -58,14 +52,6 @@ const ContactForm = () => {
       updateMessage(err.message);
     },
   });
-  const position = { lat: 53.54992, lng: 10.00678 };
-  const defaultProps = {
-    center: {
-      lat: 10.99835602,
-      lng: 77.01502627,
-    },
-    zoom: 11,
-  };
 
   return (
     <div className="bg-lighter flex gap-2 rounded-lg p-7 m-10 border-2 h-[500px]">
@@ -120,11 +106,11 @@ const ContactForm = () => {
         </form>
       </div>
       <div className="w-1/2 h-full">
-        <APIProvider>
-          <Map defaultCenter={position} defaultZoom={10}>
-            <AdvancedMarker position={position} />
-          </Map>
-        </APIProvider>
+        <img
+          src="/images/location.PNG"
+          alt="location"
+          className="w-full h-full object-cover"
+        />
       </div>
     </div>
   );

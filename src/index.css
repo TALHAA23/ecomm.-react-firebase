@@ -8,6 +8,15 @@ body {
     font-family: "outfit";
 }
 
+@layer base {
+
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
+
 .font-orelega-one {
     font-family: "Orelega One";
 }

@@ -1,15 +1,16 @@
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef } from "react";
 import { deleteProduct } from "../../adminUtils/delete";
 import { updateProduct } from "../../adminUtils/update";
 const fields = ["title", "price", "desc"];
 export default function ModificationCard({ props }) {
+  const queryClient = useQueryClient();
   const cardRef = useRef();
   const changeMutation = useMutation({
     mutationKey: [`change:${props.id}`],
     mutationFn: handleSubmit,
     onSuccess: () => {
-      setTimeout(changeMutation.reset, 5000);
+      queryClient.refetchQueries({ queryKey: ["all-products"] });
     },
   });
   const deleteMutation = useMutation({
@@ -23,6 +24,7 @@ export default function ModificationCard({ props }) {
   async function handleSubmit(event) {
     event.preventDefault();
     const formData = new FormData(event.target);
+    console.log(formData.get("img"));
     [...formData.entries()].map(([key, value]) => {
       const valueIsEmptyOrIsNotModified = !value || value == props[key];
       const fileIsNotAttached = value instanceof File && !value.name;
@@ -33,6 +35,7 @@ export default function ModificationCard({ props }) {
     const formDataToObject = Object.fromEntries(formData.entries());
 
     const lowercaseFormData = toLowercaseObject(formDataToObject);
+    console.log(lowercaseFormData);
     await updateProduct(props.id, lowercaseFormData);
   }
 
@@ -44,70 +47,72 @@ export default function ModificationCard({ props }) {
   }
 
   return (
-    <div
+    <form
       ref={cardRef}
-      className="relative h-[150px] flex shadow-md border w-full max-w-[600px] rounded-md"
+      onSubmit={changeMutation.mutate}
+      className="rounded border-2 border-gray-200"
     >
-      <div className="absolute right-0 z-10 bg-blue-600 text-white px-3 capitalize m-1 text-sm font-light">
-        {changeMutation?.isPending || deleteMutation?.isPending
-          ? "processing"
-          : changeMutation?.isError || deleteMutation?.isError
-          ? changeMutation?.error?.message || deleteMutation?.error?.message
-          : changeMutation?.isSuccess || deleteMutation?.isSuccess
-          ? "changes recorded successfully"
-          : ""}
-      </div>
-      <div className=" relative">
-        <img
-          src={props.img}
-          alt="img"
-          loading="lazy"
-          className=" h-full max-w-[100px] sm:max-w-max aspect-square object-cover rounded-md p-1"
-        />
-        <label
-          htmlFor="image"
-          className=" absolute bottom-0 bg-darker text-white w-[95%] m-1 text-center text-sm py-2"
-        >
-          Change Image
-        </label>
-      </div>
-      <form
-        onSubmit={changeMutation.mutate}
-        className="w-full py-1 flex flex-col gap-[2px] p-1"
-      >
-        {fields.map((field) => (
-          <input
-            type="text"
-            name={field}
-            id={field}
-            placeholder={props[field]}
-            className="text-xs sm:text-sm border h-[90%] pl-2 text-slate-600 rounded bg-dark"
-          />
-        ))}
-        <input type="file" name="img" id="image" hidden />
-        <div className=" flex h-full gap-1">
-          {["update", "delete"].map((btn) => (
+      <div className="flex items-center justify-between h-8 px-1 bg-gray-200 py-1 font-bold">
+        <p className="text-xs">
+          {changeMutation?.isPending || deleteMutation?.isPending
+            ? "processing..."
+            : changeMutation?.isError || deleteMutation?.isError
+            ? changeMutation?.error?.message || deleteMutation?.error?.message
+            : changeMutation?.isSuccess || deleteMutation?.isSuccess
+            ? "changes recorded successfully"
+            : ""}
+        </p>
+        <div className="flex h-full gap-1">
+          {[
+            "/icons/tick-svgrepo-com (1).svg",
+            "/icons/trash-xmark-svgrepo-com.svg",
+          ].map((icon, index) => (
             <button
-              type={btn == "update" ? "submit" : "button"}
-              disabled={
-                (btn == "update" && changeMutation.isPending) ||
-                (btn == "delete" && deleteMutation.isPending)
-              }
-              onClick={btn == "delete" ? triggerDeleteOperation : undefined}
-              className={`w-1/2 capitalize rounded-md font-semibold text-white  ${
-                btn == "update" ? "bg-green-700" : "bg-red-700"
-              } hover:opacity-70 disabled:opacity-50`}
+              type={index == 0 ? "submit" : "button"}
+              key={index}
+              onClick={index == 1 ? triggerDeleteOperation : null}
+              className="h-full aspect-square bg-gray-400 rounded-full p-1 hover:opacity-80"
             >
-              {btn == "delete"
-                ? deleteMutation.isPending
-                  ? "deleting..."
-                  : btn
-                : btn}
+              <img src={icon} alt="trash" className="h-full aspect-square" />
             </button>
           ))}
         </div>
-      </form>
-    </div>
+      </div>
+      <div className="relative w-full aspect-square">
+        <img src={props.img} alt="img" className="w-full h-full object-cover" />
+        <input
+          type="file"
+          name="img"
+          id="img"
+          className="absolute w-[90%] bottom-2 right-1
+          block text-sm text-slate-500 file:py-1 file:px-2 bg-[#fbffc1] rounded
+          file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#fbffc1]
+          hover:file:opacity-80"
+        />
+      </div>
+      <div className="px-2 py-1">
+        <input
+          type="text"
+          name="title"
+          placeholder={props.title}
+          className=" font-bold text-xl w-full bg-transparent focus:outline-none"
+        />
+
+        <textarea
+          name="desc"
+          placeholder={props.desc}
+          className="w-full bg-gray-100 resize-none focus:outline-none rounded p-1 text-sm"
+        ></textarea>
+
+        <input
+          type="number"
+          name="price"
+          min={0}
+          placeholder={`$${props.price}`}
+          className="bg-transparent focus:outline-none w-[90%] text-xl font-bold mr-auto text-green-900"
+        />
+      </div>
+    </form>
   );
 }
 

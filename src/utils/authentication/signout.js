@@ -1,7 +1,7 @@
 import { auth } from "../../assets/firebase";
 export default async function signOutUser() {
   try {
-    auth.signOut();
+    await auth.signOut();
   } catch (err) {
     return err;
   }

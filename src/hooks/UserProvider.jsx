@@ -7,7 +7,7 @@ import AdminApp from "../admin/AdminApp";
 import { useNavigate } from "react-router-dom";
 const UserContext = createContext();
 export default function UserProvider({ children }) {
-  const [UI, setUI] = useState(<AdminApp />);
+  const [UI, setUI] = useState(<ClientApp />);
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
   useEffect(() => {
@@ -15,13 +15,14 @@ export default function UserProvider({ children }) {
     return () => unsubscribe();
   }, [auth]);
   useEffect(() => {
-    if (!user) return;
+    if (!user) {
+      setUI(<ClientApp />);
+      return;
+    }
     getIdTokenResult(user).then((idTokenResult) => {
-      console.log(idTokenResult);
       if (!!idTokenResult.claims.admin) {
         setUI(<AdminApp />);
         navigate("/");
-        navi;
       } else {
         setUI(<ClientApp />);
       }
