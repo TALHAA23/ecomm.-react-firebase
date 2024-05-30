@@ -1,4 +1,4 @@
-# Ecommerece Application in React - Firebase.
+# Ecommerce Application in React - Firebase.
 
 ## Features
 
