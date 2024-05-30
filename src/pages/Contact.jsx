@@ -106,11 +106,7 @@ const ContactForm = () => {
         </form>
       </div>
       <div className="w-1/2 h-full">
-        <img
-          src="/images/location.PNG"
-          alt="location"
-          className="w-full h-full object-cover"
-        />
+        <img src="" alt="location" className="w-full h-full object-cover" />
       </div>
     </div>
   );
