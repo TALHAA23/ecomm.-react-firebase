@@ -42,9 +42,14 @@ const QueryContainer = ({ setError, id, name, email, message }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await emailjs.sendForm("service_keqpgbe", "template_x89yfzw", e.target, {
-        publicKey: "AjIHEyBoL4o1SsoCA",
-      });
+      await emailjs.sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        e.target,
+        {
+          publicKey: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+        }
+      );
       await deleteQueryById(id);
     } catch (err) {
       return setError(err);
