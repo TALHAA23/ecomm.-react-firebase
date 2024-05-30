@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import formatDate from "../../assets/formatDate";
 
 export default function ManageUsers() {
   const [filterUser, setFilterUser] = useState();
@@ -8,9 +7,7 @@ export default function ManageUsers() {
   const { isPending, isError, error, data } = useQuery({
     queryKey: ["list-users"],
     queryFn: async () => {
-      const res = await fetch(
-        "https://us-central1-grain-du-sud.cloudfunctions.net/listAllUsers"
-      );
+      const res = await fetch("url");
       const data = await res.json();
       return data;
     },
@@ -46,10 +43,10 @@ export default function ManageUsers() {
         {isPending
           ? "Loading users"
           : isError
-            ? error.message
-            : !data.users.length
-              ? "No user found"
-              : ""}
+          ? error.message
+          : !data.users.length
+          ? "No user found"
+          : ""}
       </h3>
       {data?.users.length > 0 && (
         <section>
@@ -57,8 +54,9 @@ export default function ManageUsers() {
             (user, index) => (
               <div
                 key={index}
-                className={`group relative flex hover:bg-gray-100 ${user.disabled && " opacity-50"
-                  }`}
+                className={`group relative flex hover:bg-gray-100 ${
+                  user.disabled && " opacity-50"
+                }`}
               >
                 {[
                   user.email,
@@ -94,7 +92,7 @@ const Actions = ({ useruid, disabled }) => {
   const deleteUserMutation = useMutation({
     mutationKey: ["users"],
     mutationFn: async () => {
-      await fetch("https://us-central1-grain-du-sud.cloudfunctions.net/deleteUser", {
+      await fetch("url", {
         method: "post",
         body: JSON.stringify({ uid: useruid }),
       });
@@ -106,13 +104,10 @@ const Actions = ({ useruid, disabled }) => {
   const disableUserMutation = useMutation({
     mutationKey: ["users"],
     mutationFn: async () => {
-      await fetch(
-        "https://us-central1-grain-du-sud.cloudfunctions.net/disableUser",
-        {
-          method: "post",
-          body: JSON.stringify({ uid: useruid, condition: !disabled }),
-        }
-      );
+      await fetch("url", {
+        method: "post",
+        body: JSON.stringify({ uid: useruid, condition: !disabled }),
+      });
     },
     onSuccess: () => {
       queryClient.refetchQueries({ queryKey: ["list-users"] });
@@ -130,8 +125,8 @@ const Actions = ({ useruid, disabled }) => {
             ? "enabling"
             : "disabling"
           : disabled
-            ? "enable user"
-            : "disable user"}
+          ? "enable user"
+          : "disable user"}
       </button>
       <button
         onClick={deleteUserMutation.mutate}
