@@ -6,7 +6,7 @@ import Loader from "../Loader/Loader";
 export default function ProductsArea() {
   const [page, setPage] = useState(1);
   const [lastDoc, setLastDoc] = useState(null);
-  const { isPending, isSuccess, isFetching, isError, error, data } = useQuery({
+  const { isPending, isFetching, isError, error, data } = useQuery({
     queryKey: [`product-page-${page}`],
     queryFn: () => getProducts(lastDoc),
     staleTime: 80000000,
@@ -15,7 +15,6 @@ export default function ProductsArea() {
   useEffect(() => {
     if (data) setLastDoc(data.lastDocRef);
   }, [isFetching]);
-
   if (isPending) return <Loader />;
   else if (isError) return <h1>{error.message}</h1>;
 
