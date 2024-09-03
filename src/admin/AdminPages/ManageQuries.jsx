@@ -52,6 +52,7 @@ const QueryContainer = ({ setError, id, name, email, message }) => {
       );
       await deleteQueryById(id);
     } catch (err) {
+      console.log(err);
       return setError(err);
     }
   };
